@@ -1,0 +1,7 @@
+{
+  "test_data" : {
+    "test_collection_path" : "\\test_collection\\CACM_Collection\\",
+    "test_collection_path_dummy" : "\\test_collection\\CACM_dummy\\"
+  },
+  "parsed_tokenized_output_json_file" : "\\parsed_tokenized_json_output.json"
+}
