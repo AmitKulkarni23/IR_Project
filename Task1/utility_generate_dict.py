@@ -182,14 +182,6 @@ def strip_additional_spaces(text):
     """
     Helper function that will strip out additional spaces present in text
     :param text: The text from the HTML obtained
-    :return:
     """
     return re.sub(' +', ' ', text).rstrip().lstrip()
 
-# Store the path of the json file containing the paths
-# of the other required files
-# in a global variable
-
-
-all_paths_json_file_name = "..\\all_paths.json"
-store_data(json_file_name=all_paths_json_file_name)
