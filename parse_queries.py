@@ -56,8 +56,8 @@ def parse_query_text_file(fname):
             break
 
         actual_query = get_one_single_query(file_contents)
-        print("The query number is ", query_numb)
-        print("The actual query is ", actual_query)
+        # print("The query number is ", query_numb)
+        # print("The actual query is ", actual_query)
 
         # Now add this key value pair to the dictionary
         queries[query_numb] = actual_query

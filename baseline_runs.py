@@ -105,16 +105,16 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
 
     avg_doc_length = get_avg_doc_length(collection_data)
 
-    for q in list(query_dict.keys())[:10]:
+    for q in query_dict:
         # R ->  Total number of relevant documents for this query
-        print("We are considering query ", q)
+        # print("We are considering query ", q)
         R = len(rel_docs_dict[q])
-        print("The total number of relevant documents for this query is ", R)
+        # print("The total number of relevant documents for this query is ", R)
 
         # Store the relevant documents in a list
         rel_docs_list = rel_docs_dict[q]
 
-        print("the relevant docs list is ", rel_docs_list)
+        # print("the relevant docs list is ", rel_docs_list)
 
         for doc_id in collection_data:
             # For each document calculate the score
@@ -221,7 +221,7 @@ def write_top_100_scores_to_txt(score_dict, fname, method_name):
     fd.close()
 
 
-def tf_idf(collection_data, indexed_data, query_text_file_name,):
+def tf_idf(collection_data, indexed_data, query_text_file_name):
     """
     Function that calculates the tf_idf_scores for each document
     :return: a sorted list of documents in the form as below:
@@ -246,16 +246,10 @@ def tf_idf(collection_data, indexed_data, query_text_file_name,):
         # Iterate through the entire collection
         for doc in collection_data:
             score = 0
-
-            # # We will maintain a valid score flag
-            # # If the term frequency(tf) and number of documents containg the
-            # # query term are greater than 0, then we will calculate tf-idf
-            # # scores only for such terms
-            #
-            # valid_score = False
             # Iterate through all terms in the query
             for term in query_dict[q].split():
-                # Initialize the term frequency and n_k with respect to each term
+                # Initialize the term frequency and n_k
+                # with respect to each term
                 # in the query
                 t_f, n_k = 0, 0
 
@@ -272,4 +266,126 @@ def tf_idf(collection_data, indexed_data, query_text_file_name,):
 
     sort_dict_according_to_scores(tf_idf_scores)
     return tf_idf_scores
+
+
+def get_total_number_of_terms_in_collection(collection_data):
+    """
+    Helper function which returns the total number of words in teh entire
+    collection
+    :param collection_data: is a dictionary of the form
+    # {CACM_file_1 : parsed_tokenized_text_file_1,
+    # CACM_file_2 : parsed_tokenized_text_file_2}
+    :return: The total numnber of words in the collection
+    """
+
+    total_words = 0
+    for v in collection_data.values():
+        total_words += len(v.split())
+
+    return total_words
+
+
+def get_query_term_freq_in_collection(term, inverted_index):
+    """
+    Function which calculates and returns the query term frequency
+    in the entire document
+    :param term: the term for which we want to calculate the c_q_i for
+    :param inverted_index: a dictionary of the form
+    {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
+    term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
+    :return: c_q_i
+    """
+
+    # Initialize
+    c_q_i = 0
+    if term in inverted_index:
+        for doc in inverted_index[term]:
+            c_q_i += inverted_index[term][doc]
+
+    return c_q_i
+
+
+def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
+    """
+    Function that calculates the likelihood scores for all the documents
+    :param collection_data: A dictionary containing the parsed output of teh entire
+    collection. This dictionary is of the form
+    # {CACM_file_1 : parsed_tokenized_text_file_1,
+    # CACM_file_2 : parsed_tokenized_text_file_2}
+    :param indexed_data: The inverted index
+    {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
+    term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
+    :param query_text_file_name: The path to the file containing all the queries
+    :return: Will return a list made up tuples that are sorted
+    [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
+    """
+
+    # Given lam
+    lam = 0.35
+
+    C = get_total_number_of_terms_in_collection(collection_data)
+
+    print("the total number of words in the collection is ", C)
+
+    # We will maintain a dictionary for the jm scores
+    # The format of thsi dictionary will be
+    # {query_id : {doc_id, jm_score_doc_1...}...}
+    jm_scores = {}
+
+    # Populate the dictionary with empty inner dictionaries
+    for i in range(1, 65):
+        jm_scores[i] = {}
+
+    # query_dict is of the form
+    # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
+    query_dict = parse_query_text_file(query_text_file_name)
+
+    # Maintain the lenght of all the documents in the dictionary'
+    # Lenght of documents do not change
+    # Therefore we will store it in a dictiionary in the form
+    # {doc_name : lenght_of_doc}
+
+    D_dict = {}
+
+    for document, text in collection_data.items():
+        D_dict[document] = len(text.split())
+
+    for q in query_dict:
+        # Iterate through the entire collection
+        for doc in collection_data:
+            score = 0
+            # Initialize document length as 0
+            D = 0
+
+            # Iterate through all terms in the query
+            for term in query_dict[q].split():
+
+                # Initialize the query term frequency
+                # with respect to each document as 0
+                f_qi_D = 0
+
+                # Initialize c_qi -> The number of terms the query term occurs
+                # in the entire collection
+                c_qi = 0
+
+                # Frequency of this query term in document D
+                if term in indexed_data:
+                    if doc in indexed_data[term]:
+                        f_qi_D = indexed_data[term][doc]
+
+                D = D_dict[doc]
+
+                c_qi = get_query_term_freq_in_collection(term, indexed_data)
+
+                first_term = ((1 - lam) * f_qi_D / D)
+                second_term = ((lam * c_qi) / C)
+                if first_term + second_term != 0:
+                    score += math.log(first_term + second_term)
+
+            jm_scores[q][doc] = score
+
+    sort_dict_according_to_scores(jm_scores)
+    return jm_scores
+
+
 
