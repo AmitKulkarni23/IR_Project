@@ -93,7 +93,7 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
 
     avg_doc_length = get_avg_doc_length(collection_data)
 
-    for q in query_dict:
+    for q in list(query_dict.keys())[:2]:
         # R ->  Total number of relevant documents for this query
         print("We are considering query ", q)
         R = len(rel_docs_dict[q])
@@ -127,11 +127,11 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
                 if term in indexed_data:
                     # If such a term is present in our collection
                     # Calculate r_i
-                    for item in indexed_data[term]:
+                    for document in indexed_data[term]:
                         # Increment n_i -> number of documents
                         # containing this term
                         n_i += 1
-                        if item in rel_docs_list:
+                        if document in rel_docs_list:
                             # If the same document is present in
                             # relevant doc list
                             r_i += 1
@@ -149,7 +149,20 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
 
             bm25_scores[q][doc_id] = score
 
+    sort_dict_according_to_scores(bm25_scores)
     return bm25_scores
+
+
+def sort_dict_according_to_scores(given_dict):
+    """
+    Helper function to sort the dictionary based on the scores
+    :param given_dict: the bm25_scores dictionary which is of the form
+    {query_1 : {doc_id_1 : score_1, doc_id_2: score_2..}, query_2 : {....}}
+    :return: The sorted dictionary
+    """
+
+    for k, v in given_dict.items():
+        given_dict[k] = sorted(v.items(), key=lambda x: x[1],reverse=True)
 
 
 def get_avg_doc_length(col_data):
