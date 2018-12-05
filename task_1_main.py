@@ -5,6 +5,7 @@ Python file that will be used to perform all the tasks related to Task1
 import argparse
 from baseline_runs import bm_25
 from baseline_runs import write_top_100_scores_to_txt
+from baseline_runs import tf_idf
 import json
 from pathlib import Path
 import os
@@ -161,5 +162,12 @@ if baseline == "bm25":
                                  all_paths_dict[
                                      "bm_25_score_output_text_file"])
     write_top_100_scores_to_txt(bm_25_scores, output_text_fname, "bm25")
+elif baseline == "tf_idf":
+    tf_idf_scores = tf_idf(url_text_dict, inverted_index, query_text_file)
+    print(tf_idf_scores)
+    tf_idf_output_text_fname = Path(os.path.realpath(".") +
+                                 all_paths_dict[
+                                     "tf_idf_score_output_text_file"])
+    write_top_100_scores_to_txt(tf_idf_scores, tf_idf_output_text_fname, "tf_idf")
 
 

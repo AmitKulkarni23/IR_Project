@@ -221,9 +221,55 @@ def write_top_100_scores_to_txt(score_dict, fname, method_name):
     fd.close()
 
 
-def tf_idf():
+def tf_idf(collection_data, indexed_data, query_text_file_name,):
     """
-    Function that
-    :return:
+    Function that calculates the tf_idf_scores for each document
+    :return: a sorted list of documents in the form as below:
+    [(doc_id_1, score_1),(doc_id_2, score_2)....]
     """
-    pass
+
+    tf_idf_scores = {}
+
+    # Populate the dictionary with empty inner dictionaries
+    for i in range(1, 65):
+        tf_idf_scores[i] = {}
+
+    # query_dict is of the form
+    # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
+    query_dict = parse_query_text_file(query_text_file_name)
+
+    # N -> Total number of collections in the data
+    N = len(collection_data)
+    # print("The number of documnets in the collection is ", N)
+
+    for q in query_dict:
+        # Iterate through the entire collection
+        for doc in collection_data:
+            score = 0
+
+            # # We will maintain a valid score flag
+            # # If the term frequency(tf) and number of documents containg the
+            # # query term are greater than 0, then we will calculate tf-idf
+            # # scores only for such terms
+            #
+            # valid_score = False
+            # Iterate through all terms in the query
+            for term in query_dict[q].split():
+                # Initialize the term frequency and n_k with respect to each term
+                # in the query
+                t_f, n_k = 0, 0
+
+                if term in indexed_data:
+                    if doc in indexed_data[term]:
+                        t_f = indexed_data[term][doc]
+
+                    n_k = len(indexed_data[term])
+
+                if t_f > 0 and n_k > 0:
+                    score += t_f * math.log(N / n_k)
+
+            tf_idf_scores[q][doc] = score
+
+    sort_dict_according_to_scores(tf_idf_scores)
+    return tf_idf_scores
+
