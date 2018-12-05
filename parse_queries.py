@@ -46,6 +46,8 @@ def parse_query_text_file(fname):
     opening_doc_str = "<DOC>"
     closing_doc_str = "</DOC>"
 
+    query_numb = 1
+
     while True:
         doc_tag_index = file_contents.find(opening_doc_str)
 
@@ -53,7 +55,9 @@ def parse_query_text_file(fname):
             # Reached the end of the text file, no more queries
             break
 
-        query_numb, actual_query = get_one_single_query(file_contents)
+        actual_query = get_one_single_query(file_contents)
+        print("The query number is ", query_numb)
+        print("The actual query is ", actual_query)
 
         # Now add this key value pair to the dictionary
         queries[query_numb] = actual_query
@@ -66,6 +70,8 @@ def parse_query_text_file(fname):
         # Changing file_contents variables
         file_contents = file_contents[file_contents.find(closing_doc_str) + len(
             closing_doc_str):]
+
+        query_numb += 1
 
     return queries
 
@@ -83,14 +89,15 @@ def get_one_single_query(all_text):
     # < / DOC >
     will return 1, What articles exist which deal with TSS(Time Sharing System), an operating system for IBM computers?
     :return: a tuple of the form query_id, actual query
+    :return: the actual query with all punctuations removed
     """
     doc_numb_opening_tag = "<DOCNO>"
     doc_numb_closing_tag = "</DOCNO>"
     doc_closing_tag = "</DOC>"
 
     # Query number is usually the 13th character from the start of the text
-    query_number = int(all_text[all_text.find(doc_numb_opening_tag) + len(
-        doc_numb_opening_tag) + 1])
+    # query_number = int(all_text[all_text.find(doc_numb_opening_tag) + len(
+    #     doc_numb_opening_tag) + 1])
 
     # Now actual query starts from the end of the </DOCNO> string and
     # extends up until the </DOC> closing tag
@@ -99,9 +106,10 @@ def get_one_single_query(all_text):
         doc_numb_closing_tag): all_text.find(doc_closing_tag)]
 
     # Now we have modified the query
-    actual_query = modify_query(actual_query)
+    actual_query = modify_query(actual_query).lower()
 
-    return query_number, actual_query
+    # return query_number, actual_query
+    return actual_query
 
 
 def modify_query(whole_query):
@@ -122,8 +130,4 @@ def modify_query(whole_query):
     whole_query_puc_removed = "".join(
         ch for ch in whole_query if ch not in exclude)
 
-    return re.sub(' +', ' ', whole_query_puc_removed.replace("\n", " "))
-
-
-file_name = "my_dummy.txt"
-parse_query_text_file(file_name)
+    return re.sub(' +', ' ', whole_query_puc_removed.replace("\n", " ").replace("\t", " "))

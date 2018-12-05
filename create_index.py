@@ -6,10 +6,13 @@ parsed documents from the CACM collection
 import json
 
 
-def create_inverted_index(parsed_json_file_name):
+def create_inverted_index(all_data):
     """
     Function that creates an inverted index
-    :param parsed_json_file_name: The json file which contains the parsed output
+    :param all_data: A dictionary of the form
+    {# {CACM_file_1 : parsed_tokenized_text_file_1,
+    # CACM_file_2 : parsed_tokenized_text_file_2}
+
     :return: a dictionary which is nothing but the inverted index
     of the form
     {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
@@ -18,16 +21,12 @@ def create_inverted_index(parsed_json_file_name):
     # Create a dictionary to hold the inverted index
     inv_index = {}
 
-    # Read the contents of the json file into a dictionary
-    with open(parsed_json_file_name) as j_fd:
-        all_data = json.load(j_fd)
-
     # Now all_data is a dictionary that is of the form
     # {doc_id : parsed_output from doc_Id}
 
     # We will iterate through this dictionary
     for doc in all_data:
-        print("The doc is ", doc)
+        # print("The doc is ", doc)
         # Read the contents of the document
         doc_contents = all_data[doc]
 
@@ -84,17 +83,4 @@ def inverted_index_helper(doc_content_list, filename, inv_index):
                 # in this document
                 inv_index[item].update({filename : 1})
 
-
-def write_output_to_json_file(inv_index, fname):
-    """
-    Function that writes to a json file
-    :param inv_index: The inverted index which is of the form
-    {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
-    term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
-    :param fname: The json file name where you want to write the dictionary
-    into
-    """
-
-    with open(fname, "w+") as o_fd:
-        json.dump(inv_index, o_fd, indent=4)
 

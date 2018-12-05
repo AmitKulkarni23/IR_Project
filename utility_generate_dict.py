@@ -13,41 +13,24 @@ import string
 import re
 
 
-def read_json_document(json_file_name):
-    """
-    Helper function to read all the path variables form the json file
-    Note: We are maintaining a json file to read all the input paths of our
-    test collection and also the output_paths
-
-    This will help us change the output/input paths of
-    data easily(just change in the json file) instead of worrying about changing
-    paths in the codebase
-    :return: a dictionary after the reading the entire json file
-    """
-
-    with open(json_file_name) as fd:
-        data = json.load(fd)
-
-    return data
-
-
-def store_data(json_file_name):
+def store_data(all_paths_dict):
     """
     Function that will parse and tokenize all HTML files in the CACM collection
-    :param json_file_name: The path to the json file containing all the absolute
-    paths to test collection
-    the test_collection
+    :param all_paths_dict: A dictionary containing all tghe relative paths to
+    data in the test_collection
+    Basically it is the json file "all_paths.json" in dictionary format
+    :return: a dictionary of the form
+    # Note: The url_text_dict will be of the form
+    # {CACM_file_1 : parsed_tokenized_text_file_1,
+    # CACM_file_2 : parsed_tokenized_text_file_2}
     """
-    # Note : Refer the json_file all_paths.json for
-    # the exact form of the dictionary
-    all_paths_dict = read_json_document(json_file_name)
 
     # Get the absolute path of the folder containing the 3024 HTML documents
     # Note : The paths stored in the
     # all_paths.json file are relative to the folder
     # IR_Project
 
-    # To get the absolute path we are using os.path.realpath("..")
+    # To get the absolute path we are using os.path.realpath(".")
     # which will give us the current path ( be it Mac, Windows, Linux)
 
     # To this we are appending the string obtained
@@ -56,11 +39,11 @@ def store_data(json_file_name):
     # Windows specific separators(\)
     # Therefore to get non_dependent_os_path we are using the pathlib library
 
-    os_specific_path = os.path.realpath("..") + all_paths_dict["test_data"]["test_collection_path"]
+    os_specific_path = os.path.realpath(".") + all_paths_dict["test_data"]["test_collection_path"]
     non_dependent_path = Path(os_specific_path)
 
     # Get the filename where you want to store the parsed and tokenized output
-    parsed_tokenized_output_json_filename = Path(os.path.realpath("..") + all_paths_dict["parsed_tokenized_output_json_file"])
+    parsed_tokenized_output_json_filename = Path(os.path.realpath(".") + all_paths_dict["parsed_tokenized_output_json_file"])
 
     # Note: The url_text_dict will be of the form
     # {CACM_file_1 : parsed_tokenized_text_file_1,
@@ -70,6 +53,8 @@ def store_data(json_file_name):
     # Write this dictionary to a json file
     with open(parsed_tokenized_output_json_filename, "w+") as o_fd:
         json.dump(url_text_dict, o_fd, indent=4)
+
+    return url_text_dict
 
 
 def perform_parsing_tokenization(folder_path):
@@ -83,6 +68,8 @@ def perform_parsing_tokenization(folder_path):
 
     # This will be the dictionary that will be returned
     final_dict = {}
+
+    print("The folder path is ", folder_path)
 
     # Iterate through the folder
     for html_file in os.listdir(folder_path):
@@ -113,7 +100,7 @@ def perform_parsing_tokenization(folder_path):
 
             # Finally perform punctuation handling and write this
             # and store the text in a dictionary
-            final_dict[doc_id] = perform_punctuation_handling(non_parsed_text)
+            final_dict[doc_id] = perform_punctuation_handling(non_parsed_text).lower()
 
     return final_dict
 
