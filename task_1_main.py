@@ -82,7 +82,7 @@ def convert_to_non_os_specific_path(fname):
     :param fname: a relative path on Windows path format(using \\)
     :return: a non-OS specific path
     """
-    return Path(os.path.realpath(".") + fname)
+    return Path(os.path.realpath(".")) / Path(fname)
 
 
 # Get the user arguments
@@ -107,8 +107,7 @@ print("Running ", baseline, " model")
 # {CACM_file_1 : parsed_tokenized_text_file_1,
 # CACM_file_2 : parsed_tokenized_text_file_2}
 
-collection_data_fname = Path(os.path.realpath(".") +
-                             all_paths_dict[
+collection_data_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
                                  "parsed_tokenized_output_json_file"])
 
 print("THE COLLECTION DATA FNMAE IS ", collection_data_fname)
@@ -126,9 +125,9 @@ with open(collection_data_fname) as c_fd:
 # using the script(create_index.py)
 
 # We will load the json file and read it into a dictionary
-inverted_index_json_fname = Path(os.path.realpath(".") +
-                             all_paths_dict[
-                                 "indexer_output_json_file"])
+inverted_index_json_fname = Path(os.path.realpath(".") /
+                             Path(all_paths_dict[
+                                 "indexer_output_json_file"]))
 
 print("The inverted index filename is ", inverted_index_json_fname)
 with open(inverted_index_json_fname) as inv_fd:
@@ -156,20 +155,18 @@ if baseline == "bm25":
     bm_25_scores = new_bm25_scores(url_text_dict, inverted_index, query_text_file, relevance_text_file, relevant_json_fname)
 
     # Writing the results to a text file
-    output_text_fname = Path(os.path.realpath(".") +
-                                 all_paths_dict[
+    output_text_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
                                      "bm_25_score_output_text_file"])
     write_top_100_scores_to_txt(bm_25_scores, output_text_fname, "bm25")
 elif baseline == "tf_idf":
     tf_idf_scores = tf_idf(url_text_dict, inverted_index, query_text_file)
-    tf_idf_output_text_fname = Path(os.path.realpath(".") +
-                                 all_paths_dict[
-                                     "tf_idf_score_output_text_file"])
+    tf_idf_output_text_fname = Path(os.path.realpath(".") /
+                                 Path(all_paths_dict[
+                                     "tf_idf_score_output_text_file"]))
     write_top_100_scores_to_txt(tf_idf_scores, tf_idf_output_text_fname, "tf_idf")
 
 elif baseline == "jm_qlm":
     jm_qlm_scores = jm_likelihood_scores(url_text_dict, inverted_index, query_text_file)
-    jm_qlm_score_output_text_file = Path(os.path.realpath(".") +
-                                         all_paths_dict["jm_qlm_score_output_text_file"])
+    jm_qlm_score_output_text_file = Path(os.path.realpath(".")) / Path(all_paths_dict["jm_qlm_score_output_text_file"])
 
     write_top_100_scores_to_txt(jm_qlm_scores,jm_qlm_score_output_text_file,"jm_qlm")
