@@ -3,10 +3,7 @@ Python file that will be used to perform all the tasks related to Task1
 """
 
 import argparse
-from baseline_runs import bm_25
-from baseline_runs import write_top_100_scores_to_txt
-from baseline_runs import tf_idf
-from baseline_runs import jm_likelihood_scores
+from baseline_runs import new_bm25_scores, write_top_100_scores_to_txt, tf_idf, jm_likelihood_scores
 import json
 from pathlib import Path
 import os
@@ -156,7 +153,7 @@ relevant_json_fname = convert_to_non_os_specific_path(all_paths_dict["relevant_d
 
 # Get the BM25 scores in a dictionary
 if baseline == "bm25":
-    bm_25_scores = bm_25(url_text_dict, inverted_index, query_text_file, relevance_text_file, relevant_json_fname)
+    bm_25_scores = new_bm25_scores(url_text_dict, inverted_index, query_text_file, relevance_text_file, relevant_json_fname)
 
     # Writing the results to a text file
     output_text_fname = Path(os.path.realpath(".") +
