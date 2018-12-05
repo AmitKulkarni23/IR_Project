@@ -7,13 +7,15 @@ import collections
 import math
 
 
-def get_relevance_information(rel_info_fname):
+def get_relevance_information(rel_info_fname, relevant_json_fname):
     """
     Function that reads the cac.rel file and gets the relevance information that
     will be used for the BM25 model
     :param rel_info_fname: The path to the file containing the relevance information
     : Will return a dictionary of the form
     {query_numb : [ <list of all docs relevant to query 1] }
+    :param relevant_json_fname: The path to the json file which to which the
+    relevant data dictionary will be written to
     """
 
     rel_docs_dict = collections.defaultdict(list)
@@ -41,10 +43,14 @@ def get_relevance_information(rel_info_fname):
                 rel_docs_dict[int(items[0])] = [items[2]]
 
     rel_fd.close()
+
+    with open(relevant_json_fname, "w+") as rj_fd:
+        json.dump(rel_docs_dict, rj_fd, indent=4)
+
     return rel_docs_dict
 
 
-def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fname):
+def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fname, relevant_json_fname):
     """
     Function that performs BM25 ranking
     :param collection_data: A dictionary containing the parsed output of teh entire
@@ -57,11 +63,17 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
     :param query_text_file_name: The path to the file containing all the queries
     :param relevant_docs_fname: The text file containing the relevance file
     i.e cacm.rel.txt
+    :param relevant_json_fname: The json file name where the relevant data
+    dictionary will be written. The relevant data dictionary is of the form
+    {query_numb : [ <list of all docs relevant to query 1] }
+    :return: Will return a list made up tuples that are sorted
+    [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
     """
 
     # Create another dictionary that will hold the doc_id and their BM25 score
     # Note: We will maintain the bm_25scores dictionary in the form
-    # {query_1 : {doc_id_1 : score_for_doc_id_1, doc_id_2: score_for_doc_id_2}...query_64 : {}}
+    # {query_1 : {doc_id_1 : score_for_doc_id_1, doc_id_2: score_for_doc_id_2}
+    # ...query_64 : {}}
     bm25_scores = {}
 
     # Populate the dictionary with empty inner dictionaries
@@ -76,7 +88,7 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
     # file. We need to get the relevance information
     # rel_docs_dict i sof the form:
     # {query_numb: [ < list of all docs relevant to query 1]}
-    rel_docs_dict = get_relevance_information(relevant_docs_fname)
+    rel_docs_dict = get_relevance_information(relevant_docs_fname, relevant_json_fname)
 
     # query_dict is of the form
     # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
@@ -93,7 +105,7 @@ def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fna
 
     avg_doc_length = get_avg_doc_length(collection_data)
 
-    for q in list(query_dict.keys())[:2]:
+    for q in list(query_dict.keys())[:10]:
         # R ->  Total number of relevant documents for this query
         print("We are considering query ", q)
         R = len(rel_docs_dict[q])
@@ -179,3 +191,39 @@ def get_avg_doc_length(col_data):
 
     return total_length / len(col_data)
 
+
+def write_top_100_scores_to_txt(score_dict, fname, method_name):
+    """
+    Function that will write the top 100 scores of the baseline run to a .txt file
+    :param score_dict: is a dictionary of the form
+    {q_id : { doc_1: score_1....}, query_2 : { doc_2, .....}}
+    Note: This dictionary is sorted
+    :param: fname -> The txt file which will have all the information regarding
+    the
+    :return: Write this data into a text file ( only the top 100) in the format
+    Query_ID Q0 doc_id rank score baseline_method
+    """
+
+    fd = open(fname, "w+")
+
+    for q in score_dict:
+        inner_dict = score_dict[q]
+        # print(inner_dict)
+        # print("Inner dict type is ", type(inner_dict))
+
+        # Converting a dictionary to a list
+        # The cinverted list will only contain the keys
+        for idx, item in enumerate(inner_dict[:100]):
+            to_write = str(q) + " " + "Q0" + " " + item[0] + " " + str(idx + 1) + " " + str(item[1]) + " " + method_name + "\n"
+            fd.write(to_write)
+
+        fd.write("-----------------------\n")
+    fd.close()
+
+
+def tf_idf():
+    """
+    Function that
+    :return:
+    """
+    pass

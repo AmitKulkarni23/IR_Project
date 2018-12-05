@@ -4,6 +4,7 @@ Python file that will be used to perform all the tasks related to Task1
 
 import argparse
 from baseline_runs import bm_25
+from baseline_runs import write_top_100_scores_to_txt
 import json
 from pathlib import Path
 import os
@@ -147,8 +148,18 @@ print("the query text file is ", query_text_file)
 relevance_text_file = convert_to_non_os_specific_path(all_paths_dict["test_data"]["relevance_text_file"])
 print("the relevenace text file is ", relevance_text_file)
 
+# Get the path of the json file where you want to
+# store the relevant data dictionary
+relevant_json_fname = convert_to_non_os_specific_path(all_paths_dict["relevant_docs_json_output_fname"])
+
 # Get the BM25 scores in a dictionary
 if baseline == "bm25":
-    bm_25_scores = bm_25(url_text_dict, inverted_index, query_text_file, relevance_text_file)
+    bm_25_scores = bm_25(url_text_dict, inverted_index, query_text_file, relevance_text_file, relevant_json_fname)
 
-display_first_n_items_in_dict(bm_25_scores, 2)
+    # Writing the results to a text file
+    output_text_fname = Path(os.path.realpath(".") +
+                                 all_paths_dict[
+                                     "bm_25_score_output_text_file"])
+    write_top_100_scores_to_txt(bm_25_scores, output_text_fname, "bm25")
+
+

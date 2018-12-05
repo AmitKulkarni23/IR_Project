@@ -5,6 +5,8 @@
     "relevance_text_file" : "\\test_collection\\cacm.rel.txt"
   },
   "parsed_tokenized_output_json_file" : "\\parsed_tokenized_json_output.json",
-  "indexer_output_json_file" : "\\indexer_output_json_file.json"
+  "indexer_output_json_file" : "\\indexer_output_json_file.json",
+  "bm_25_score_output_text_file" : "\\bm_25_scores.txt",
+  "relevant_docs_json_output_fname" : "\\relevant_docs.json"
 
 }
