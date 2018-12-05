@@ -76,6 +76,52 @@ def store_data(json_fname):
     # return url_text_dict
 
 
+def ignore_table_of_numbers(all_html_data, html_fname):
+    """
+    Function that will remove the table of numbers from the HTML file
+    :param all_html_data: The entire HTML data passed in as string
+    :param html_fname: The name of the html file that we are parsing
+    :return: string after ignoring / discarding the table of numbers
+    """
+    # Note: In each of the HTML files, the table of numbers begin
+    # after the string "AM" or "PM"
+    # Idea : Consider text only till last occurrence of "AM" or "PM"
+    # Ignore the rest
+
+    # Convert the entire string to a list
+    list_html_data = all_html_data.split()
+
+    if html_fname == "CACM-0189.html":
+        last_index = len(list_html_data) - 1 - list_html_data[::-1].index('9:57PM')
+        # Ignore everything after this
+        return " ".join(list_html_data[:last_index + 1])
+
+    if html_fname == "CACM-1621.html":
+        last_index = len(list_html_data) - 1 - list_html_data[::-1].index('PMB')
+        # Ignore everything after this
+        return " ".join(list_html_data[:last_index + 1])
+
+    # Check for occurrence of PM first
+    if "PM" in list_html_data:
+        # Get the last index of PM
+        index_of_PM = len(list_html_data) - 1 - list_html_data[::-1].index('PM')
+
+        # Ignore everything after this
+        return " ".join(list_html_data[:index_of_PM + 1])
+
+    elif "AM" in list_html_data:
+        # Get the last index of PM
+        index_of_AM = len(list_html_data) - 1 - list_html_data[::-1].index('AM')
+
+        # Ignore everything after this
+        return " ".join(list_html_data[:index_of_AM + 1])
+
+    else:
+        print("The document ", html_fname, "doesn't have either PM or AM")
+
+    return None
+
+
 def perform_parsing_tokenization(folder_path):
     """
     Function that will perform the core of the parsing and the tokenization
@@ -88,7 +134,7 @@ def perform_parsing_tokenization(folder_path):
     # This will be the dictionary that will be returned
     final_dict = {}
 
-    print("The folder path is ", folder_path)
+    # print("The folder path is ", folder_path)
 
     # Iterate through the folder
     for html_file in os.listdir(folder_path):
@@ -102,6 +148,17 @@ def perform_parsing_tokenization(folder_path):
             # Read the HTML contents of this file
             with open(folder_path / html_file) as html_fd:
                 raw_html_data = html_fd.read()
+
+            # Now, we have received the entire data present in the HTML file
+            # But, we have to ignore the last digits part
+            raw_html_data = ignore_table_of_numbers(raw_html_data, html_file)
+
+            if raw_html_data is None:
+                # i.e the function ignore_table_of_numbers returned None
+                # which happens if PM or AM is not present in the text of the
+                # HTML file then we will not consider such a file at all
+                # Just continue
+                continue
 
             # Now contents contains all the data in the HTMl file
             # Create BeautifulSoup object
