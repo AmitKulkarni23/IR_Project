@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 from create_index import create_inverted_index
+import errno
 
 
 def read_json_document(json_file_name):
@@ -191,6 +192,13 @@ stemmed_corpus_output_json_fname = Path(os.path.realpath(".") +
 
 print("The stemmed corpus output file name is ",
       stemmed_corpus_output_json_fname)
+
+if not os.path.exists(os.path.dirname(stemmed_corpus_output_json_fname)):
+    try:
+        os.makedirs(os.path.dirname(stemmed_corpus_output_json_fname))
+    except OSError as exc:
+        if exc.errno != errno.EEXIST:
+            raise
 
 # We will write this parsed_corpus to a json file
 with open(stemmed_corpus_output_json_fname, "w+") as stem_out:

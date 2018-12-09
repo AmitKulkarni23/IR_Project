@@ -282,7 +282,6 @@ def tf_idf(collection_data_arg, indexed_data_arg, query_text_file_name, normal_q
         query_dict = parse_query_text_file(query_text_file_name)
     else:
         query_dict = parse_normal_query_text_file(query_text_file_name)
-        print("The query dictionary is ", query_dict)
 
     # N -> Total number of collections in the data
     N = len(collection_data_arg)
@@ -403,13 +402,12 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name,
     for i in range(1, 65):
         jm_scores[i] = {}
 
-        # query_dict is of the form
-        # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
-        if not normal_query_file:
-            query_dict = parse_query_text_file(query_text_file_name)
-        else:
-            query_dict = parse_normal_query_text_file(query_text_file_name)
-            print("The query dictionary is ", query_dict)
+    # query_dict is of the form
+    # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
+    if not normal_query_file:
+        query_dict = parse_query_text_file(query_text_file_name)
+    else:
+        query_dict = parse_normal_query_text_file(query_text_file_name)
 
     # Maintain the length of all the documents in the dictionary'
     # Lenght of documents do not change

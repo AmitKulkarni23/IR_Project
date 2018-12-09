@@ -19,11 +19,11 @@
   "bm25_stopped_queries" : "\\Outputs\\Phase1\\Task3A\\bm25_stopped_queries.txt",
   "tf_idf_stopped_queries" : "\\Outputs\\Phase1\\Task3A\\tf_idf_stopped_queries.txt",
   "jm_qlm_stopped_queries" : "\\Outputs\\Phase1\\Task3A\\jm_qlm_stopped_queries.txt",
-  "stemmed_corpus_json_fname" : "\\stemmed_corpus_collection.json",
-  "stemmed_inverted_index" : "\\stemmed_inverted_index.json",
-  "bm25_stem_queries" : "\\bm25_stem_queries.txt",
-  "tf_idf_stem_queries" : "\\tf_idf_stem_queries.txt",
-  "jm_qlm_stem_queries" : "\\jm_qlm_stem_queries.txt"
+  "stemmed_corpus_json_fname" : "\\Outputs\\Phase1\\Task3B\\stemmed_corpus_collection.json",
+  "stemmed_inverted_index" : "\\Outputs\\Phase1\\Task3B\\stemmed_inverted_index.json",
+  "bm25_stem_queries" : "\\Outputs\\Phase1\\Task3B\\bm25_stem_queries.txt",
+  "tf_idf_stem_queries" : "\\Outputs\\Phase1\\Task3B\\tf_idf_stem_queries.txt",
+  "jm_qlm_stem_queries" : "\\Outputs\\Phase1\\Task3B\\jm_qlm_stem_queries.txt"
 
 
 }
