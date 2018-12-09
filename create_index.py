@@ -25,7 +25,6 @@ def create_inverted_index(collection_data_json_file, out_fname, stop_words=None)
     term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
     """
 
-    print("Collection data json file is", collection_data_json_file)
     with open(collection_data_json_file) as input_fd:
         all_data = json.load(input_fd)
 
@@ -125,43 +124,45 @@ def parse_user_arguments():
     return vars(ap.parse_args())
 
 
-# Accept the user arguments
-user_args = parse_user_arguments()
-all_paths_json_fname = user_args["all_paths_json_fname"]
-use_common_words = user_args["use_common_words"]
+if __name__ == "__main__":
+    print("YES EXECUTING THISSSSSSSS")
+    # Accept the user arguments
+    user_args = parse_user_arguments()
+    all_paths_json_fname = user_args["all_paths_json_fname"]
+    use_common_words = user_args["use_common_words"]
 
 
-# Load the all_paths.json file into a dictionary
-with open(all_paths_json_fname) as all_paths_fd:
-    all_paths_dict = json.load(all_paths_fd)
+    # Load the all_paths.json file into a dictionary
+    with open(all_paths_json_fname) as all_paths_fd:
+        all_paths_dict = json.load(all_paths_fd)
 
-inverted_index_output_fname = Path(os.path.realpath(".")) / Path(all_paths_dict["indexer_output_json_file"])
+    inverted_index_output_fname = Path(os.path.realpath(".")) / Path(all_paths_dict["indexer_output_json_file"])
 
-collection_json_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
-                                 "parsed_tokenized_output_json_file"])
+    collection_json_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
+                                     "parsed_tokenized_output_json_file"])
 
-stopped_queries_output_fname = Path(os.path.realpath(".") +
-                             all_paths_dict[
-                                 "stopped_queries_output_fname"])
+    stopped_queries_output_fname = Path(os.path.realpath(".") +
+                                 all_paths_dict[
+                                     "stopped_queries_output_fname"])
 
-print("The stopped queries output fname is ", stopped_queries_output_fname)
+    print("The stopped queries output fname is ", stopped_queries_output_fname)
 
 
-# Now create the collection data and write it to a json file
-if use_common_words == "True":
+    # Now create the collection data and write it to a json file
+    if use_common_words == "True":
 
-    # Get the filename where all the stiop words are stored
-    common_words_fname = Path(
-        os.path.realpath(".") + all_paths_dict["test_data"][
-            "common_words_file"])
-    print("THE COMMON WORDS FNAME IS ", common_words_fname)
+        # Get the filename where all the stiop words are stored
+        common_words_fname = Path(
+            os.path.realpath(".") + all_paths_dict["test_data"][
+                "common_words_file"])
+        print("THE COMMON WORDS FNAME IS ", common_words_fname)
 
-    # We have to read the filename and capture the stopwords in a list
-    common_words = []
-    with open(common_words_fname) as common_words_fd:
-        for line in common_words_fd:
-            common_words.append(line.rstrip())
+        # We have to read the filename and capture the stopwords in a list
+        common_words = []
+        with open(common_words_fname) as common_words_fd:
+            for line in common_words_fd:
+                common_words.append(line.rstrip())
 
-    create_inverted_index(collection_json_fname, stopped_queries_output_fname, stop_words=common_words)
-else:
-    create_inverted_index(collection_json_fname, inverted_index_output_fname)
+        create_inverted_index(collection_json_fname, stopped_queries_output_fname, stop_words=common_words)
+    else:
+        create_inverted_index(collection_json_fname, inverted_index_output_fname)

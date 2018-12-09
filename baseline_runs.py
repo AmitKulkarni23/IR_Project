@@ -98,6 +98,7 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
         query_dict = parse_normal_query_text_file(query_text_file_name)
         # print("QUERY DICT = ")
         # print(query_dict)
+        print("The query dictionary is ", query_dict)
 
     # N -> Total number of collections in the data
     N = len(collection_data)
@@ -196,6 +197,7 @@ def calculate_r_i(rel_docs_list, indexed_data, term):
     # and one calculated above
     return len(set(rel_docs_list).intersection(set(list(indexed_data[term].keys()))))
 
+
 def sort_dict_according_to_scores(given_dict):
     """
     Helper function to sort the dictionary based on the scores
@@ -252,9 +254,11 @@ def write_top_100_scores_to_txt(score_dict, fname, method_name):
     fd.close()
 
 
-def tf_idf(collection_data, indexed_data, query_text_file_name):
+def tf_idf(collection_data_arg, indexed_data_arg, query_text_file_name, normal_query_file=False):
     """
     Function that calculates the tf_idf_scores for each document
+    :param normal_query_file: Indicates whether the query file is text file
+    with no <DOC></DOC> tags( if True)
     :return: a sorted list of documents in the form as below:
     [(doc_id_1, score_1),(doc_id_2, score_2)....]
     """
@@ -267,14 +271,18 @@ def tf_idf(collection_data, indexed_data, query_text_file_name):
 
     # query_dict is of the form
     # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
-    query_dict = parse_query_text_file(query_text_file_name)
+    if not normal_query_file:
+        query_dict = parse_query_text_file(query_text_file_name)
+    else:
+        query_dict = parse_normal_query_text_file(query_text_file_name)
+        print("The query dictionary is ", query_dict)
 
     # N -> Total number of collections in the data
-    N = len(collection_data)
+    N = len(collection_data_arg)
 
     for q in query_dict:
         # Iterate through the entire collection
-        for doc in collection_data:
+        for doc in collection_data_arg:
             score = 0
             # Iterate through all terms in the query
             for term in query_dict[q].split():
@@ -283,11 +291,11 @@ def tf_idf(collection_data, indexed_data, query_text_file_name):
                 # in the query
                 t_f, n_k = 0, 0
 
-                if term in indexed_data:
-                    if doc in indexed_data[term]:
-                        t_f = indexed_data[term][doc]
+                if term in indexed_data_arg:
+                    if doc in indexed_data_arg[term]:
+                        t_f = indexed_data_arg[term][doc]
 
-                    n_k = len(indexed_data[term])
+                    n_k = len(indexed_data_arg[term])
 
                 if t_f > 0 and n_k > 0:
                     score += t_f * math.log(N / n_k)
@@ -354,7 +362,8 @@ def get_query_term_freq_in_collection(term, inverted_index):
     return c_q_i
 
 
-def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
+def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name,
+                         normal_query_file=False):
     """
     Function that calculates the likelihood scores for all the documents
     :param collection_data: A dictionary containing the parsed output of teh entire
@@ -365,6 +374,8 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
     {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
     term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
     :param query_text_file_name: The path to the file containing all the queries
+    :param normal_query_file: normal_query_file: Indicates whether the query file is text file
+    with no <DOC></DOC> tags( if True) else
     :return: Will return a list made up tuples that are sorted
     [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
     """
@@ -385,9 +396,13 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
     for i in range(1, 65):
         jm_scores[i] = {}
 
-    # query_dict is of the form
-    # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
-    query_dict = parse_query_text_file(query_text_file_name)
+        # query_dict is of the form
+        # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
+        if not normal_query_file:
+            query_dict = parse_query_text_file(query_text_file_name)
+        else:
+            query_dict = parse_normal_query_text_file(query_text_file_name)
+            print("The query dictionary is ", query_dict)
 
     # Maintain the lenght of all the documents in the dictionary'
     # Lenght of documents do not change

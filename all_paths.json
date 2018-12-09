@@ -2,13 +2,28 @@
   "test_data" : {
     "test_collection_path" : "\\test_collection\\CACM_Collection\\",
     "query_text_file" : "\\test_collection\\cacm.query.txt",
-    "relevance_text_file" : "\\test_collection\\cacm.rel.txt"
+    "relevance_text_file" : "\\test_collection\\cacm.rel.txt",
+    "common_words_file" : "\\test_collection\\common_words",
+    "cacm_stem" : "\\test_collection\\cacm_stem.txt",
+    "stem_queries" : "\\test_collection\\cacm_stem.query.txt"
   },
   "parsed_tokenized_output_json_file" : "\\parsed_tokenized_json_output.json",
   "indexer_output_json_file" : "\\indexer_output_json_file.json",
   "bm_25_score_output_text_file" : "\\bm_25_scores.txt",
   "relevant_docs_json_output_fname" : "\\relevant_docs.json",
   "tf_idf_score_output_text_file" : "\\tf_idf_scores.txt",
-  "jm_qlm_score_output_text_file" : "\\jm_qlm_scores.txt"
+  "jm_qlm_score_output_text_file" : "\\jm_qlm_scores.txt",
+  "pseudo_relevance_feedback_scores" : "\\pseudo_relevance_feedback_scores.txt",
+  "new_expanded_queries" : "\\new_expanded_queries.txt",
+  "stopped_queries_output_fname" : "\\stopped_queries_output.json",
+  "bm25_stopped_queries" : "\\bm25_stopped_queries.txt",
+  "tf_idf_stopped_queries" : "\\tf_idf_stopped_queries.txt",
+  "jm_qlm_stopped_queries" : "\\jm_qlm_stopped_queries.txt",
+  "stemmed_corpus_json_fname" : "\\stemmed_corpus_collection.json",
+  "stemmed_inverted_index" : "\\stemmed_inverted_index.json",
+  "bm25_stem_queries" : "\\bm25_stem_queries.txt",
+  "tf_idf_stem_queries" : "\\tf_idf_stem_queries.txt",
+  "jm_qlm_stem_queries" : "\\jm_qlm_stem_queries.txt"
+
 
 }
