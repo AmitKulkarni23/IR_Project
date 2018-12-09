@@ -153,7 +153,7 @@ relevant_json_fname = convert_to_non_os_specific_path(all_paths_dict["relevant_d
 
 # Get the BM25 scores in a dictionary
 if baseline == "bm25":
-    bm_25_scores = new_bm25_scores(url_text_dict, inverted_index, query_text_file, relevance_text_file, relevant_json_fname)
+    bm_25_scores = new_bm25_scores(url_text_dict, inverted_index, query_text_file, relevance_text_file)
 
     # Writing the results to a text file
     output_text_fname = Path(os.path.realpath(".") +

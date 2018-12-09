@@ -9,7 +9,7 @@ from pathlib import Path
 import os
 
 
-def create_inverted_index(collection_data_json_file, out_fname):
+def create_inverted_index(collection_data_json_file, out_fname, stop_words=None):
     """
     Function that creates an inverted index
     :param collection_data_json_file: Is the json file containing
@@ -18,6 +18,8 @@ def create_inverted_index(collection_data_json_file, out_fname):
     # CACM_file_2 : parsed_tokenized_text_file_2}
     :param: out_fname - The path to the json file weher you want to store
     the inverted index
+    :param: common_words - The list of all common words( by default it is None)
+    A list of common words will be passed as and when required
     :return: write to a .json file a dictionary of the format
     {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
     term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
@@ -46,7 +48,7 @@ def create_inverted_index(collection_data_json_file, out_fname):
         filename = doc
 
         # Now call helper function
-        inverted_index_helper(doc_content_list, filename, inv_index)
+        inverted_index_helper(doc_content_list, filename, inv_index, stop_words)
 
         # Note that the dictionary inv_index
         # will be updated by the helper function
@@ -57,12 +59,13 @@ def create_inverted_index(collection_data_json_file, out_fname):
         json.dump(inv_index, o_fd, indent=4)
 
 
-def inverted_index_helper(doc_content_list, filename, inv_index):
+def inverted_index_helper(doc_content_list, filename, inv_index, stop_words):
     """
     A helper that updates the inverted index dicitionary
     :param doc_content_list: a list of all strings present in a document
     :param filename: The name of the file that we are currently dealing with
     :param inv_index: the actual inverted index dicitonary
+    :param stop_words: The list of stop words
     """
 
     # We need to handle the gram feature here
@@ -71,6 +74,12 @@ def inverted_index_helper(doc_content_list, filename, inv_index):
 
     for i in range(range_count):
         item = doc_content_list[i]
+
+        if stop_words and item in stop_words:
+            # Ignore the stop words
+            # Do not index it
+            # print("Ignoreing word ", item)
+            continue
         if item not in inv_index:
             # No such key is present
             # This is the first occurrence in any of the files
@@ -109,12 +118,18 @@ def parse_user_arguments():
                          "json file which contains all the"
                          "relative paths of other files", required=True)
 
+    ap.add_argument("-c", "--use_common_words",
+                    help="Enter true if you want to use stopwords",
+                    required=False)
+
     return vars(ap.parse_args())
 
 
 # Accept the user arguments
 user_args = parse_user_arguments()
 all_paths_json_fname = user_args["all_paths_json_fname"]
+use_common_words = user_args["use_common_words"]
+
 
 # Load the all_paths.json file into a dictionary
 with open(all_paths_json_fname) as all_paths_fd:
@@ -127,6 +142,28 @@ collection_json_fname = Path(os.path.realpath(".") +
                              all_paths_dict[
                                  "parsed_tokenized_output_json_file"])
 
-# print("the inverted index out fname is ", inverted_index_output_fname)
+stopped_queries_output_fname = Path(os.path.realpath(".") +
+                             all_paths_dict[
+                                 "stopped_queries_output_fname"])
+
+print("The stopped queries output fname is ", stopped_queries_output_fname)
+
+
 # Now create the collection data and write it to a json file
-create_inverted_index(collection_json_fname, inverted_index_output_fname)
+if use_common_words == "True":
+
+    # Get the filename where all the stiop words are stored
+    common_words_fname = Path(
+        os.path.realpath(".") + all_paths_dict["test_data"][
+            "common_words_file"])
+    print("THE COMMON WORDS FNAME IS ", common_words_fname)
+
+    # We have to read the filename and capture the stopwords in a list
+    common_words = []
+    with open(common_words_fname) as common_words_fd:
+        for line in common_words_fd:
+            common_words.append(line.rstrip())
+
+    create_inverted_index(collection_json_fname, stopped_queries_output_fname, stop_words=common_words)
+else:
+    create_inverted_index(collection_json_fname, inverted_index_output_fname)

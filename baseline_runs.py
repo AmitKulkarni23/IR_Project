@@ -1,21 +1,18 @@
 """
 Python file which conatins functions to perform baseline runs given the indexer
 """
-import json
 from parse_queries import parse_query_text_file
 import collections
 import math
 
 
-def get_relevance_information(rel_info_fname, relevant_json_fname):
+def get_relevance_information(rel_info_fname):
     """
     Function that reads the cac.rel file and gets the relevance information that
     will be used for the BM25 model
     :param rel_info_fname: The path to the file containing the relevance information
     : Will return a dictionary of the form
     {query_numb : [ <list of all docs relevant to query 1] }
-    :param relevant_json_fname: The path to the json file which to which the
-    relevant data dictionary will be written to
     """
 
     rel_docs_dict = collections.defaultdict(list)
@@ -44,144 +41,10 @@ def get_relevance_information(rel_info_fname, relevant_json_fname):
 
     rel_fd.close()
 
-    with open(relevant_json_fname, "w+") as rj_fd:
-        json.dump(rel_docs_dict, rj_fd, indent=4)
-
     return rel_docs_dict
 
 
-# def bm_25(collection_data, indexed_data, query_text_file_name, relevant_docs_fname, relevant_json_fname):
-#     """
-#     Function that performs BM25 ranking
-#     :param collection_data: A dictionary containing the parsed output of teh entire
-#     collection. This dictionary is of the form
-#     # {CACM_file_1 : parsed_tokenized_text_file_1,
-#     # CACM_file_2 : parsed_tokenized_text_file_2}
-#     :param indexed_data: The inverted index
-#     {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
-#     term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
-#     :param query_text_file_name: The path to the file containing all the queries
-#     :param relevant_docs_fname: The text file containing the relevance file
-#     i.e cacm.rel.txt
-#     :param relevant_json_fname: The json file name where the relevant data
-#     dictionary will be written. The relevant data dictionary is of the form
-#     {query_numb : [ <list of all docs relevant to query 1] }
-#     :return: Will return a list made up tuples that are sorted
-#     [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
-#     """
-#
-#     # Create another dictionary that will hold the doc_id and their BM25 score
-#     # Note: We will maintain the bm_25scores dictionary in the form
-#     # {query_1 : {doc_id_1 : score_for_doc_id_1, doc_id_2: score_for_doc_id_2}
-#     # ...query_64 : {}}
-#     bm25_scores = {}
-#
-#     # Populate the dictionary with empty inner dictionaries
-#     for i in range(1, 65):
-#         bm25_scores[i] = {}
-#
-#     # Note: Indexed data is of the form
-#     # { term : { doc_id : count_in_doc } }
-#
-#     # Now the json data is present in the dictionaries
-#     # Note: There is information given about relevance in file cacm.rel.txt
-#     # file. We need to get the relevance information
-#     # rel_docs_dict i sof the form:
-#     # {query_numb: [ < list of all docs relevant to query 1]}
-#     rel_docs_dict = get_relevance_information(relevant_docs_fname, relevant_json_fname)
-#
-#     # query_dict is of the form
-#     # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
-#     query_dict = parse_query_text_file(query_text_file_name)
-#
-#     # N -> Total number of collections in the data
-#     N = len(collection_data)
-#     # print("The number of documnets in the collection is ", N)
-#
-#     # The constants
-#     k1 = 1.2
-#     b = 0.75
-#     k2 = 100
-#
-#     avg_doc_length = get_avg_doc_length(collection_data)
-#
-#     for q in query_dict:
-#         # R ->  Total number of relevant documents for this query
-#         # print("We are considering query ", q)
-#         R = len(rel_docs_dict[q])
-#         # print("The total number of relevant documents for this query is ", R)
-#
-#         # Store the relevant documents in a list
-#         rel_docs_list = rel_docs_dict[q]
-#
-#         # print("the relevant docs list is ", rel_docs_list)
-#
-#         for doc_id in collection_data:
-#             # For each document calculate the score
-#             score = 0
-#
-#             # We will maintain a flag called as valid_doc
-#             # which only turn True if there is atleast 1 query
-#             # term present in this document
-#
-#             # If none of the query terms are present in this document
-#             # then we won't consider such a document
-#             valid_doc = False
-#             for term in query_dict[q].split():
-#                 # ri -> Number of relevant documents containing term i
-#                 r_i = 0
-#
-#                 # n_i -> number of documents containing term i
-#                 n_i = 0
-#
-#                 # frequency of this term in the entire query
-#                 q_fi = query_dict[q].split().count(term)
-#                 # print("q_fi = ", q_fi, "term = ", term)
-#
-#                 # f_i => Frequency of term i in document
-#                 if term in indexed_data and doc_id in indexed_data[term]:
-#                     f_i = indexed_data[term][doc_id]
-#                 else:
-#                     # We are considering only terms that contain the term
-#                     # If this query term is not present in this particular
-#                     # document then we won't do any further processing
-#                     # We will just continue to the next query term
-#                     continue
-#
-#                 if term in indexed_data:
-#                     # If such a term is present in our collection
-#                     # Calculate r_i
-#
-#                     # Increment n_i -> number of documents
-#                     # containing this term
-#                     n_i = len(indexed_data[term])
-#
-#                     # UNCOMMENT THE BELOW LINES IF YOU WANT RELEVANT
-#                     # INFORMATION ( REQUIRED FOR PHASE 3)
-#                     # for document in indexed_data[term]:
-#                     #     if document in rel_docs_list:
-#                     #         # If the same document is present in
-#                     #         # relevant doc list
-#                     #         r_i += 1
-#
-#                 if f_i > 0:
-#                     K = k1 * ((1 - b) + b * len(collection_data[doc_id].split()) / avg_doc_length)
-#                     z = ((k1 + 1) * f_i / (K + f_i)) * ((k2 + 1) * q_fi) / (k2 + q_fi)
-#                     numerator = ((r_i + 0.5) / (R - r_i + 0.5)) * z
-#                     denominator = ((n_i - r_i + 0.5) / (N - n_i - R + r_i + 0.5))
-#                     score += math.log(numerator / denominator)
-#
-#             # Store this score w.r.t this document ID
-#             if q not in bm25_scores:
-#                 bm25_scores[q] = {}
-#
-#             bm25_scores[q][doc_id] = score
-#
-#     sort_dict_according_to_scores(bm25_scores)
-#     return bm25_scores
-
-
-def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevant_docs_fname, relevant_json_fname):
+def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevant_docs_fname, rel_info_enabled=False, normal_query_file=False):
     """
     Function that performs BM25 ranking
     :param collection_data: A dictionary containing the parsed output of teh entire
@@ -197,19 +60,24 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     :param relevant_json_fname: The json file name where the relevant data
     dictionary will be written. The relevant data dictionary is of the form
     {query_numb : [ <list of all docs relevant to query 1] }
-    :return: Will return a list made up tuples that are sorted
-    [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
+    :param rel_info_enabled: Default value is False
+    If this param is True, then the relevance information is taken into account
+    :param normal_query_file: If the query file input to this method contains
+    <DOC></DOC> strings then this argument is False else if its a normal text
+    file as in queries written line by line then this is TRUE
+    :return: Will return a dictionary with values as lists made up of tuples that are sorted
+    {1query_id : [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
     """
 
     # Create another dictionary that will hold the doc_id and their BM25 score
     # Note: We will maintain the bm_25scores dictionary in the form
     # {query_1 : {doc_id_1 : score_for_doc_id_1, doc_id_2: score_for_doc_id_2}
     # ...query_64 : {}}
-    new_bm25_scores = {}
+    new_bm25_scores_dict = {}
 
     # Populate the dictionary with empty inner dictionaries
     for i in range(1, 65):
-        new_bm25_scores[i] = {}
+        new_bm25_scores_dict[i] = {}
 
     # Note: Indexed data is of the form
     # { term : { doc_id : count_in_doc } }
@@ -219,15 +87,20 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     # file. We need to get the relevance information
     # rel_docs_dict i sof the form:
     # {query_numb: [ < list of all docs relevant to query 1]}
-    rel_docs_dict = get_relevance_information(relevant_docs_fname, relevant_json_fname)
+    rel_docs_dict = get_relevance_information(relevant_docs_fname)
+    # print("The rel docsc dict is ", rel_docs_dict)
 
     # query_dict is of the form
     # {q_id: < Parsed Query >, q_id_2: < Parsed Query 2 >}
-    query_dict = parse_query_text_file(query_text_file_name)
+    if not normal_query_file:
+        query_dict = parse_query_text_file(query_text_file_name)
+    else:
+        query_dict = parse_normal_query_text_file(query_text_file_name)
+        # print("QUERY DICT = ")
+        # print(query_dict)
 
     # N -> Total number of collections in the data
     N = len(collection_data)
-    # print("The number of documnets in the collection is ", N)
 
     # The constants
     k1 = 1.2
@@ -239,16 +112,17 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     for q in query_dict:
         # R ->  Total number of relevant documents for this query
 
-        R = 0
-        # UNCOMMENT THE BLOW LINE TO CONSIDER RELEVANT INFORMATION
-        # R = len(rel_docs_dict[q])
-        # print("The total number of relevant documents for this query is ", R)
+        if rel_info_enabled:
+            # Accomodation prior( relevance information )
+            # print("Query we are considering is ", q)
+            R = len(rel_docs_dict[q])
+        else:
+            R = 0
 
         # Store the relevant documents in a list
         rel_docs_list = rel_docs_dict[q]
-        r_i = 0
 
-        # TODO: Calculate r_i -> Refer to the Piazza post( Rquired for Phase3)
+        # TODO: Calculate r_i -> Refer to the Piazza post( Required for Phase3)
 
         for term in query_dict[q].split():
             # If this query term is present in our index
@@ -261,13 +135,23 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
                 # q_i -> frequency of this term in the entire query
                 q_fi = query_dict[q].split().count(term)
 
+                # r_i -> number of relevant docs containing term i
+                r_i = 0
+                if rel_info_enabled:
+                    # Recalculate r_i
+                    if q == 63 or q == 55:
+                        print("q = ", q)
+                        print(rel_docs_list)
+                        print(list(set(list(indexed_data[term].keys()))))
+                        print(r_i)
+                        print("--------")
+                    r_i = calculate_r_i(rel_docs_list, indexed_data, term)
+
                 for doc in indexed_data[term]:
                     # f_i -> frequency of this term in the document
                     # NOTE: In this way we are avoiding any
                     # document having f_i as 0
                     f_i = indexed_data[term][doc]
-                    if f_i == 0:
-                        print("WOOOOAHHH f_i is 0 for ", doc)
                     K = k1 * ((1 - b) + b * len(
                         collection_data[doc].split()) / avg_doc_length)
                     z = ((k1 + 1) * f_i / (K + f_i)) * ((k2 + 1) * q_fi) / (
@@ -275,17 +159,42 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
                     numerator = ((r_i + 0.5) / (R - r_i + 0.5)) * z
                     denominator = (
                                 (n_i - r_i + 0.5) / (N - n_i - R + r_i + 0.5))
+                    try:
+                        temp_score = math.log(numerator / denominator)
+                    except ValueError as v:
+                        # print("Value error occurred for term ", term)
+                        # print(numerator)
+                        # print(denominator)
+                        # print("n_i = ", n_i)
+                        # print("r_i = ", r_i)
+                        # print("N", N)
+                        # print("R=", R)
+                        pass
 
-                    temp_score = math.log(numerator / denominator)
-
-                    if doc in new_bm25_scores[q]:
-                        new_bm25_scores[q][doc] += temp_score
+                    if doc in new_bm25_scores_dict[q]:
+                        new_bm25_scores_dict[q][doc] += temp_score
                     else:
-                        new_bm25_scores[q][doc] = temp_score
+                        new_bm25_scores_dict[q][doc] = temp_score
 
-    sort_dict_according_to_scores(new_bm25_scores)
-    return new_bm25_scores
+    sort_dict_according_to_scores(new_bm25_scores_dict)
+    return new_bm25_scores_dict
 
+
+def calculate_r_i(rel_docs_list, indexed_data, term):
+    """
+    Helper function which calculates the term r_i in the BM25 algorithm
+    i.e the number of relevant documenst conating the term i
+    :param rel_docs_list: is a list of relevant documents specific to a query
+    :param indexed_data: is the inverted index
+    :param term: is the query term
+    :return: number of relevant docs conatining the query term "term"
+    """
+    # Idea
+    # indexed_data[term] -> dict
+    # Take only the keys and convert it into a list
+    # return the common elemnst present in the rel_docs_list
+    # and one calculated above
+    return len(set(rel_docs_list).intersection(set(list(indexed_data[term].keys()))))
 
 
 def sort_dict_according_to_scores(given_dict):
@@ -389,6 +298,25 @@ def tf_idf(collection_data, indexed_data, query_text_file_name):
 
     sort_dict_according_to_scores(tf_idf_scores)
     return tf_idf_scores
+
+
+def parse_normal_query_text_file(query_fname):
+    """
+    Function that is used to parse queries given a text file
+    :param query_fname: The name of the file which contains the queries
+    :return: a dictionary of the form
+    {q_id : <Parsed Query>, q_id_2 : <Parse Query 2>}
+    """
+
+    count = 1
+
+    query_dict = {}
+    with open(query_fname) as fd:
+        for line in fd:
+            query_dict[count] = line.rstrip()
+            count += 1
+
+    return query_dict
 
 
 def get_total_number_of_terms_in_collection(collection_data):
