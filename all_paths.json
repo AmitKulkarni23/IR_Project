@@ -24,6 +24,6 @@
   "tf_idf_stem_queries" : "\\Outputs\\Phase1\\Task3B\\tf_idf_stem_queries.txt",
   "jm_qlm_stem_queries" : "\\Outputs\\Phase1\\Task3B\\jm_qlm_stem_queries.txt",
   "parsed_queries"  : "\\Outputs\\Query_terms\\parsed_query_dict.json",
-  "unparsed_queries" : "\\Outputs\\Query_terms\\unparsed_query_dict.json"
-
+  "unparsed_queries" : "\\Outputs\\Query_terms\\unparsed_query_dict.json",
+  "extra_credit_output_best_match" : "\\Outputs\\Extra_Credits\\best_match_scores.txt"
 }

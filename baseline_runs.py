@@ -78,9 +78,6 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     :param query_text_file_name: The path to the file coPath(ntaining all the queries
     :param relevant_docs_fname: The text file containing the relevance file
     i.e cacm.rel.txt
-    :param relevant_json_fname: The json file name where the relevant data
-    dictionary will be written. The relevant data dictionary is of the form
-    {query_numb : [ <list of all docs relevant to query 1] }
     :param rel_info_enabled: Default value is False
     If this param is True, then the relevance information is taken into account
     :param normal_query_file: If the query file input to this method contains
