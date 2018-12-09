@@ -13,7 +13,7 @@
   "tf_idf_score_output_text_file" : "\\Outputs\\Phase1\\Task1\\tf_idf_scores.txt",
   "jm_qlm_score_output_text_file" : "\\Outputs\\Phase1\\Task1\\jm_qlm_scores.txt",
   "pseudo_relevance_feedback_scores" : "\\Outputs\\Phase1\\Task2\\pseudo_relevance_feedback_scores.txt",
-  "new_expanded_queries" : "\\new_expanded_queries.txt",
+  "new_expanded_queries" : "\\Outputs\\Phase1\\Task2\\new_expanded_queries.txt",
   "stopped_queries_output_fname" : "\\Outputs\\Phase1\\Task3A\\stopped_queries_output.json",
   "bm25_stopped_queries" : "\\Outputs\\Phase1\\Task3A\\bm25_stopped_queries.txt",
   "tf_idf_stopped_queries" : "\\Outputs\\Phase1\\Task3A\\tf_idf_stopped_queries.txt",
