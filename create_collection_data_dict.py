@@ -62,7 +62,7 @@ def store_data(json_fname):
     non_dependent_path = Path(os_specific_path)
 
     # Get the filename where you want to store the parsed and tokenized output
-    parsed_tokenized_output_json_filename = Path(os.path.realpath(".") + all_paths_dict["parsed_tokenized_output_json_file"])
+    parsed_tokenized_output_json_filename = Path(os.path.realpath(".") / Path(all_paths_dict["parsed_tokenized_output_json_file"]))
 
     # Note: The url_text_dict will be of the form
     # {CACM_file_1 : parsed_tokenized_text_file_1,

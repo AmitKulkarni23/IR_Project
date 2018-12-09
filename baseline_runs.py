@@ -54,7 +54,7 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     :param indexed_data: The inverted index
     {term_1 : {doc_1 : term_1_freq_in_doc_1, doc_2 : term_1_freq_in_doc_2},
     term_2 : {doc_1 : term2_freq_in_doc_1, doc_2 : term2_freq_in_doc_2} .....}
-    :param query_text_file_name: The path to the file containing all the queries
+    :param query_text_file_name: The path to the file coPath(ntaining all the queries
     :param relevant_docs_fname: The text file containing the relevance file
     i.e cacm.rel.txt
     :param relevant_json_fname: The json file name where the relevant data
@@ -196,7 +196,6 @@ def calculate_r_i(rel_docs_list, indexed_data, term):
     # and one calculated above
     return len(set(rel_docs_list).intersection(set(list(indexed_data[term].keys()))))
 
-
 def sort_dict_according_to_scores(given_dict):
     """
     Helper function to sort the dictionary based on the scores
@@ -272,7 +271,6 @@ def tf_idf(collection_data, indexed_data, query_text_file_name):
 
     # N -> Total number of collections in the data
     N = len(collection_data)
-    # print("The number of documnets in the collection is ", N)
 
     for q in query_dict:
         # Iterate through the entire collection
@@ -415,10 +413,6 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
                 # with respect to each document as 0
                 f_qi_D = 0
 
-                # Initialize c_qi -> The number of terms the query term occurs
-                # in the entire collection
-                c_qi = 0
-
                 # Frequency of this query term in document D
                 if term in indexed_data:
                     if doc in indexed_data[term]:
@@ -426,6 +420,8 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name):
 
                 D = D_dict[doc]
 
+                # Initialize c_qi -> The number of terms the query term occurs
+                # in the entire collection
                 c_qi = get_query_term_freq_in_collection(term, indexed_data)
 
                 first_term = ((1 - lam) * f_qi_D / D)

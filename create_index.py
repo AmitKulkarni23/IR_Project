@@ -135,11 +135,9 @@ use_common_words = user_args["use_common_words"]
 with open(all_paths_json_fname) as all_paths_fd:
     all_paths_dict = json.load(all_paths_fd)
 
-inverted_index_output_fname = Path(os.path.realpath(".") +
-                                   all_paths_dict["indexer_output_json_file"])
+inverted_index_output_fname = Path(os.path.realpath(".")) / Path(all_paths_dict["indexer_output_json_file"])
 
-collection_json_fname = Path(os.path.realpath(".") +
-                             all_paths_dict[
+collection_json_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
                                  "parsed_tokenized_output_json_file"])
 
 stopped_queries_output_fname = Path(os.path.realpath(".") +
