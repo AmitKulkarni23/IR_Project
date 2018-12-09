@@ -1,0 +1,91 @@
+1	CACM-1410	 RR 		4	0.25
+2	CACM-2434	 RR 		1	1.0
+3	CACM-1807	 RR 		37	0.02702702702702703
+4	CACM-3128	 RR 		1	1.0
+5	CACM-2035	 RR 		2	0.5
+6	CACM-2828	 RR 		2	0.5
+7	CACM-3043	 RR 		1	1.0
+8	CACM-2625	 RR 		1	1.0
+9	CACM-3068	 RR 		2	0.5
+10	CACM-2785	 RR 		1	1.0
+11	CACM-2699	 RR 		1	1.0
+12	CACM-3127	 RR 		1	1.0
+13	CACM-1947	 RR 		1	1.0
+14	CACM-2679	 RR 		3	0.3333333333333333
+15	CACM-2701	 RR 		4	0.25
+16	CACM-2378	 RR 		2	0.5
+17	CACM-1223	 RR 		1	1.0
+18	CACM-2175	 RR 		7	0.14285714285714285
+19	CACM-2973	 RR 		1	1.0
+20	CACM-2695	 RR 		1	1.0
+21	CACM-2932	 RR 		7	0.14285714285714285
+22	CACM-2692	 RR 		11	0.09090909090909091
+23	CACM-3148	 RR 		1	1.0
+24	CACM-1696	 RR 		5	0.2
+25	CACM-2318	 RR 		1	1.0
+26	CACM-2632	 RR 		3	0.3333333333333333
+27	CACM-2297	 RR 		1	1.0
+28	CACM-2949	 RR 		1	1.0
+29	CACM-2927	 RR 		3	0.3333333333333333
+30	CACM-1926	 RR 		4	0.25
+31	CACM-3047	 RR 		2	0.5
+32	CACM-3139	 RR 		1	1.0
+33	CACM-2805	 RR 		37	0.02702702702702703
+
+Query 34 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 35 is not present in relevant set. Hence reciprocal rank is N/A
+
+36	CACM-1265	 RR 		3	0.3333333333333333
+37	CACM-2265	 RR 		1	1.0
+38	CACM-3031	 RR 		1	1.0
+39	CACM-2651	 RR 		1	1.0
+40	CACM-2956	 RR 		3	0.3333333333333333
+
+Query 41 is not present in relevant set. Hence reciprocal rank is N/A
+
+42	CACM-1653	 RR 		6	0.16666666666666666
+43	CACM-2771	 RR 		5	0.2
+44	CACM-2829	 RR 		1	1.0
+45	CACM-2452	 RR 		1	1.0
+
+Query 46 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 47 is not present in relevant set. Hence reciprocal rank is N/A
+
+48	CACM-2325	 RR 		1	1.0
+49	CACM-2390	 RR 		2	0.5
+
+Query 50 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 51 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 52 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 53 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 54 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 55 is not present in relevant set. Hence reciprocal rank is N/A
+
+
+Query 56 is not present in relevant set. Hence reciprocal rank is N/A
+
+57	CACM-3077	 RR 		1	1.0
+58	CACM-2634	 RR 		2	0.5
+59	CACM-1456	 RR 		1	1.0
+60	CACM-3087	 RR 		2	0.5
+61	CACM-2711	 RR 		1	1.0
+62	CACM-3156	 RR 		21	0.047619047619047616
+63	CACM-2266	 RR 		1	1.0
+64	CACM-2651	 RR 		1	1.0
+
+Mean reciprocal rank is :0.6627236502236502
+
