@@ -1,0 +1,1 @@
+Luhn technique, window of length 50, counted each significant word, n^2/window length

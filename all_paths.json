@@ -22,7 +22,8 @@
   "stemmed_inverted_index" : "\\Outputs\\Phase1\\Task3B\\stemmed_inverted_index.json",
   "bm25_stem_queries" : "\\Outputs\\Phase1\\Task3B\\bm25_stem_queries.txt",
   "tf_idf_stem_queries" : "\\Outputs\\Phase1\\Task3B\\tf_idf_stem_queries.txt",
-  "jm_qlm_stem_queries" : "\\Outputs\\Phase1\\Task3B\\jm_qlm_stem_queries.txt"
-
+  "jm_qlm_stem_queries" : "\\Outputs\\Phase1\\Task3B\\jm_qlm_stem_queries.txt",
+  "parsed_queries"  : "\\Outputs\\Query_terms\\parsed_query_dict.json",
+  "unparsed_queries" : "\\Outputs\\Query_terms\\unparsed_query_dict.json"
 
 }

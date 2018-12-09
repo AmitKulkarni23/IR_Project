@@ -3,11 +3,6 @@ import os
 
 from bs4 import BeautifulSoup
 
-cwd = os.getcwd()
-CACM = path = os.path.join(cwd,'../cacm')
-DOC_SCORE_PATH = path = os.path.join(cwd,'Extras')
-DOC_PATH = path = os.path.join(cwd,'test_collection/CACM_Collection')
-f = open("snippet_result.html","w")
 
 def getTextFromHTML(fileName):
     """
@@ -15,13 +10,21 @@ def getTextFromHTML(fileName):
     :param fileName: the HTML file which is searched for
     :return: the list of terms
     """
-    f = open(DOC_PATH+"/"+fileName+".html")
+    f = open(CORPUS_PATH + "/" + fileName + ".html")
     soup = BeautifulSoup(f,'html.parser')
     text_list = soup.pre.text.split()
-    text_list[:] = (value for value in text_list if value != "of")
-    text_list[:] = (value for value in text_list if value != "in")
-    text_list[:] = (value for value in text_list if value != "the")
-    text_list[:] = (value for value in text_list if value != "and")
+    # text_list[:] = (value for value in text_list if value != "of")
+    # text_list[:] = (value for value in text_list if value != "or")
+    # text_list[:] = (value for value in text_list if value != "in")
+    # text_list[:] = (value for value in text_list if value != "the")
+    # text_list[:] = (value for value in text_list if value != "and")
+    # text_list[:] = (value for value in text_list if value != "for")
+    # text_list[:] = (value for value in text_list if value != "by")
+    # text_list[:] = (value for value in text_list if value != "The")
+    # text_list[:] = (value for value in text_list if value != "I")
+    # text_list[:] = (value for value in text_list if value != "to")
+    # text_list[:] = (value for value in text_list if value != "a")
+    
     return text_list
 
 def getCleanTerm(term):
@@ -114,11 +117,11 @@ def snippet_generation():
     :return: null
     """
     # load parsed queries for matching of queries with text
-    query_file = open('parsed_query_dict_ini.json', 'r')
+    query_file = open(QUERY_PATH + 'parsed_query_dict.json', 'r')
     query_dict = json.load(query_file)
 
     # load unparsed queries for display the result
-    query_file_unparsed = open("unparsed_queries.json", "r")
+    query_file_unparsed = open(QUERY_PATH + "unparsed_query_dict.json", "r")
     query_dict_unparsed = json.load(query_file_unparsed)
 
     # parsed_tokenized_file = open("parsed_tokenized_json_output.json",'r')
@@ -132,4 +135,17 @@ def snippet_generation():
             f.write("<br /><b>" + list_of_files[i] + "</b>  Score: "+ score_list[i] +"<br />")
             generate_snippet_for_one_query(query, list_of_files[i])
 
-snippet_generation()
+
+if __name__ == "__main__":
+
+    cwd = os.getcwd()
+    # CACM = path = os.path.join(cwd, '../cacm')
+    QUERY_PATH = '../Outputs/Query_terms/'
+    DOC_SCORE_PATH = '../Outputs/Phase1/Task1'
+    CORPUS_PATH = '../test_collection/CACM_Collection'
+    OUTPUT_PATH = '../Outputs/Phase2'
+    f = open(OUTPUT_PATH + "/snippet_bm_25.html", "w")
+    f.write("<html>")
+    snippet_generation()
+    f.write("</html>")
+    f.close()
