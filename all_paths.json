@@ -25,5 +25,7 @@
   "jm_qlm_stem_queries" : "\\Outputs\\Phase1\\Task3B\\jm_qlm_stem_queries.txt",
   "parsed_queries"  : "\\Outputs\\Query_terms\\parsed_query_dict.json",
   "unparsed_queries" : "\\Outputs\\Query_terms\\unparsed_query_dict.json",
-  "extra_credit_output_best_match" : "\\Outputs\\Extra_Credits\\best_match_scores.txt"
+  "extra_credit_output_best_match" : "\\Outputs\\Extra_Credits\\best_match_scores.txt",
+  "extra_credit_output_exact_match" : "\\Outputs\\Extra_Credits\\exact_match_scores.txt",
+  "positional_index" : "\\Outputs\\Extra_Credits\\positional_index.json"
 }
