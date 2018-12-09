@@ -4,6 +4,8 @@ Python file which conatins functions to perform baseline runs given the indexer
 from parse_queries import parse_query_text_file
 import collections
 import math
+import os
+import errno
 
 
 def get_relevance_information(rel_info_fname):
@@ -35,13 +37,32 @@ def get_relevance_information(rel_info_fname):
             # So items will be ["1", "Q0", "CACM-1410", "1"]
             # Store this in a dictionary
             if int(items[0]) in rel_docs_dict:
-                rel_docs_dict[int(items[0])].append(items[2])
+                rel_docs_dict[int(items[0])].append(append_proper_zeros(items[2]))
             else:
-                rel_docs_dict[int(items[0])] = [items[2]]
+                rel_docs_dict[int(items[0])] = [append_proper_zeros(items[2])]
 
     rel_fd.close()
 
     return rel_docs_dict
+
+
+def append_proper_zeros(given_str):
+    """
+    This function appends proper zeros to doc_ids
+    :param given_str: is the doc_id ( Example: CACM-74, CACM-1401, CACM-504)
+    :return: string with proper zeros appended ( Example: CACM-0074, CACM-1410, CACM-0504)
+    """
+    temp_list = given_str.split("-")
+
+    item = temp_list[1]
+    if len(item) == 1:
+        temp_list[1] = "000" + item
+    elif len(item) == 2:
+        temp_list[1] = "00" + item
+    elif len(item) == 3:
+        temp_list[1] = "0" + item
+
+    return "-".join(temp_list)
 
 
 def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevant_docs_fname, rel_info_enabled=False, normal_query_file=False):
@@ -66,7 +87,7 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
     <DOC></DOC> strings then this argument is False else if its a normal text
     file as in queries written line by line then this is TRUE
     :return: Will return a dictionary with values as lists made up of tuples that are sorted
-    {1query_id : [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
+    {query_id : [(doc_1, doc_1_score), (doc_2, doc_2_score)....]
     """
 
     # Create another dictionary that will hold the doc_id and their BM25 score
@@ -96,9 +117,6 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
         query_dict = parse_query_text_file(query_text_file_name)
     else:
         query_dict = parse_normal_query_text_file(query_text_file_name)
-        # print("QUERY DICT = ")
-        # print(query_dict)
-        print("The query dictionary is ", query_dict)
 
     # N -> Total number of collections in the data
     N = len(collection_data)
@@ -139,13 +157,6 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
                 # r_i -> number of relevant docs containing term i
                 r_i = 0
                 if rel_info_enabled:
-                    # Recalculate r_i
-                    if q == 63 or q == 55:
-                        print("q = ", q)
-                        print(rel_docs_list)
-                        print(list(set(list(indexed_data[term].keys()))))
-                        print(r_i)
-                        print("--------")
                     r_i = calculate_r_i(rel_docs_list, indexed_data, term)
 
                 for doc in indexed_data[term]:
@@ -160,17 +171,7 @@ def new_bm25_scores(collection_data, indexed_data, query_text_file_name, relevan
                     numerator = ((r_i + 0.5) / (R - r_i + 0.5)) * z
                     denominator = (
                                 (n_i - r_i + 0.5) / (N - n_i - R + r_i + 0.5))
-                    try:
-                        temp_score = math.log(numerator / denominator)
-                    except ValueError as v:
-                        # print("Value error occurred for term ", term)
-                        # print(numerator)
-                        # print(denominator)
-                        # print("n_i = ", n_i)
-                        # print("r_i = ", r_i)
-                        # print("N", N)
-                        # print("R=", R)
-                        pass
+                    temp_score = math.log(numerator / denominator)
 
                     if doc in new_bm25_scores_dict[q]:
                         new_bm25_scores_dict[q][doc] += temp_score
@@ -190,12 +191,14 @@ def calculate_r_i(rel_docs_list, indexed_data, term):
     :param term: is the query term
     :return: number of relevant docs conatining the query term "term"
     """
-    # Idea
-    # indexed_data[term] -> dict
-    # Take only the keys and convert it into a list
-    # return the common elemnst present in the rel_docs_list
-    # and one calculated above
-    return len(set(rel_docs_list).intersection(set(list(indexed_data[term].keys()))))
+    r_i = 0
+    total_docs = indexed_data[term]
+
+    for item in total_docs:
+        if item in rel_docs_list:
+            r_i += 1
+
+    return r_i
 
 
 def sort_dict_according_to_scores(given_dict):
@@ -237,12 +240,16 @@ def write_top_100_scores_to_txt(score_dict, fname, method_name):
     Query_ID Q0 doc_id rank score baseline_method
     """
 
-    fd = open(fname, "w+")
+    if not os.path.exists(os.path.dirname(fname)):
+        try:
+            os.makedirs(os.path.dirname(fname))
+        except OSError as exc:
+            if exc.errno != errno.EEXIST:
+                raise
 
+    fd = open(fname, "w+")
     for q in score_dict:
         inner_dict = score_dict[q]
-        # print(inner_dict)
-        # print("Inner dict type is ", type(inner_dict))
 
         # Converting a dictionary to a list
         # The cinverted list will only contain the keys
@@ -404,9 +411,9 @@ def jm_likelihood_scores(collection_data, indexed_data, query_text_file_name,
             query_dict = parse_normal_query_text_file(query_text_file_name)
             print("The query dictionary is ", query_dict)
 
-    # Maintain the lenght of all the documents in the dictionary'
+    # Maintain the length of all the documents in the dictionary'
     # Lenght of documents do not change
-    # Therefore we will store it in a dictiionary in the form
+    # Therefore we will store it in a dictionary in the form
     # {doc_name : lenght_of_doc}
 
     D_dict = {}
