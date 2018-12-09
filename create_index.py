@@ -1,12 +1,16 @@
 """
 Python file that is used to create unigram index out of the
 parsed documents from the CACM collection
+
+Credits :
+Creating Directory -> https://tinyurl.com/yd4vz7c6
 """
 
 import json
 import argparse
 from pathlib import Path
 import os
+import errno
 
 
 def create_inverted_index(collection_data_json_file, out_fname, stop_words=None):
@@ -52,6 +56,13 @@ def create_inverted_index(collection_data_json_file, out_fname, stop_words=None)
         # Note that the dictionary inv_index
         # will be updated by the helper function
         # inverted_index_helper
+
+    if not os.path.exists(os.path.dirname(out_fname)):
+        try:
+            os.makedirs(os.path.dirname(out_fname))
+        except OSError as exc:
+            if exc.errno != errno.EEXIST:
+                raise
 
     # Write the inverted index to a specific.json file
     with open(out_fname, "w+") as o_fd:
@@ -125,20 +136,19 @@ def parse_user_arguments():
 
 
 if __name__ == "__main__":
-    print("YES EXECUTING THISSSSSSSS")
     # Accept the user arguments
     user_args = parse_user_arguments()
     all_paths_json_fname = user_args["all_paths_json_fname"]
     use_common_words = user_args["use_common_words"]
 
-
     # Load the all_paths.json file into a dictionary
     with open(all_paths_json_fname) as all_paths_fd:
         all_paths_dict = json.load(all_paths_fd)
 
-    inverted_index_output_fname = Path(os.path.realpath(".")) / Path(all_paths_dict["indexer_output_json_file"])
+    inverted_index_output_fname = Path(os.path.realpath(".") + all_paths_dict["indexer_output_json_file"])
+    print("THE INVE IS ", inverted_index_output_fname)
 
-    collection_json_fname = Path(os.path.realpath(".")) / Path(all_paths_dict[
+    collection_json_fname = Path(os.path.realpath(".") +  all_paths_dict[
                                      "parsed_tokenized_output_json_file"])
 
     stopped_queries_output_fname = Path(os.path.realpath(".") +
@@ -147,7 +157,6 @@ if __name__ == "__main__":
 
     print("The stopped queries output fname is ", stopped_queries_output_fname)
 
-
     # Now create the collection data and write it to a json file
     if use_common_words == "True":
 
@@ -155,7 +164,6 @@ if __name__ == "__main__":
         common_words_fname = Path(
             os.path.realpath(".") + all_paths_dict["test_data"][
                 "common_words_file"])
-        print("THE COMMON WORDS FNAME IS ", common_words_fname)
 
         # We have to read the filename and capture the stopwords in a list
         common_words = []

@@ -2,6 +2,8 @@
 Python file that will be used to generate a json file of the form
 {cacm_file_name_1 : parsed_taokenized_data_file_1,
 cacm_file_name_2 : parse_tokenized_data_file_2....}
+
+Credits -> https://tinyurl.com/yd4vz7c6
 """
 
 # Import Statements
@@ -12,6 +14,7 @@ from bs4 import BeautifulSoup
 import string
 import re
 import argparse
+import errno
 
 
 def read_json_document(json_file_name):
@@ -62,12 +65,19 @@ def store_data(json_fname):
     non_dependent_path = Path(os_specific_path)
 
     # Get the filename where you want to store the parsed and tokenized output
-    parsed_tokenized_output_json_filename = Path(os.path.realpath(".") / Path(all_paths_dict["parsed_tokenized_output_json_file"]))
+    parsed_tokenized_output_json_filename = Path(os.path.realpath(".") + all_paths_dict["parsed_tokenized_output_json_file"])
 
     # Note: The url_text_dict will be of the form
     # {CACM_file_1 : parsed_tokenized_text_file_1,
     # CACM_file_2 : parsed_tokenized_text_file_2}
     url_text_dict = perform_parsing_tokenization(non_dependent_path)
+
+    if not os.path.exists(os.path.dirname(parsed_tokenized_output_json_filename)):
+        try:
+            os.makedirs(os.path.dirname(parsed_tokenized_output_json_filename))
+        except OSError as exc:
+            if exc.errno != errno.EEXIST:
+                raise
 
     # Write this dictionary to a json file
     with open(parsed_tokenized_output_json_filename, "w+") as o_fd:

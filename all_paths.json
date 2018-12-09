@@ -7,8 +7,8 @@
     "cacm_stem" : "\\test_collection\\cacm_stem.txt",
     "stem_queries" : "\\test_collection\\cacm_stem.query.txt"
   },
-  "parsed_tokenized_output_json_file" : "\\parsed_tokenized_json_output.json",
-  "indexer_output_json_file" : "\\indexer_output_json_file.json",
+  "parsed_tokenized_output_json_file" : "\\Outputs\\Cleaned_Corpus\\cleaned_corpus.json",
+  "indexer_output_json_file" : "\\Outputs\\Inverted_Index\\inverted_index_corpus.json",
   "bm_25_score_output_text_file" : "\\bm_25_scores.txt",
   "relevant_docs_json_output_fname" : "\\relevant_docs.json",
   "tf_idf_score_output_text_file" : "\\tf_idf_scores.txt",
