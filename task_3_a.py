@@ -115,10 +115,6 @@ print("the query text file is ", query_text_file)
 relevance_text_file = convert_to_non_os_specific_path(all_paths_dict["test_data"]["relevance_text_file"])
 print("the relevenace text file is ", relevance_text_file)
 
-# Get the path of the json file where you want to
-# store the relevant data dictionary
-relevant_json_fname = convert_to_non_os_specific_path(all_paths_dict["relevant_docs_json_output_fname"])
-
 # Get the BM25 scores in a dictionary
 if baseline == "bm25":
     bm_25_scores = new_bm25_scores(url_text_dict, inverted_index, query_text_file, relevance_text_file)

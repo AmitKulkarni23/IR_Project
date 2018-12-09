@@ -10,7 +10,6 @@
   "parsed_tokenized_output_json_file" : "\\Outputs\\Cleaned_Corpus\\cleaned_corpus.json",
   "indexer_output_json_file" : "\\Outputs\\Inverted_Index\\inverted_index_corpus.json",
   "bm_25_score_output_text_file" : "\\Outputs\\Phase1\\Task1\\bm_25_scores.txt",
-  "relevant_docs_json_output_fname" : "\\relevant_docs.json",
   "tf_idf_score_output_text_file" : "\\Outputs\\Phase1\\Task1\\tf_idf_scores.txt",
   "jm_qlm_score_output_text_file" : "\\Outputs\\Phase1\\Task1\\jm_qlm_scores.txt",
   "pseudo_relevance_feedback_scores" : "\\Outputs\\Phase1\\Task2\\pseudo_relevance_feedback_scores.txt",
