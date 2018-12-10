@@ -80,7 +80,19 @@ def exact_match(corpus, inverted_index_arg, query_text_file):
             # Iterate through the entire corpus
             flag = True
             score = 0
+
+            # Flag variables that will ensure that order is maintained
             inner_position = -1
+            first_occurrence = True
+
+            # Note: first_occurrence -> sets the value of inner_position to be the
+            # value of position index of the very first query term
+
+            # This happens only once
+            # After this, for every consequent query term
+            # inner position is set to
+            # inner_position = position_of_query_term - inner_position
+
             for term in set(query_dict[q].split()):
                 # A flag that will be used to check the ordering of the terms
 
@@ -98,6 +110,10 @@ def exact_match(corpus, inverted_index_arg, query_text_file):
                         # This doc contains the particular term
                         # We will consider the position of first occurrence of
                         # the query term
+                        if first_occurrence:
+                            inner_position = inverted_index[term][doc][1][0]
+                            first_occurrence = False
+
                         if inverted_index[term][doc][1][0] < inner_position:
                             # There is an order mismatch
                             # break out of the loop
