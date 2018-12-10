@@ -1,52 +1,52 @@
-1	0.2	Lucene_scoresP@5
-2	0.6	Lucene_scoresP@5
-3	0.0	Lucene_scoresP@5
-4	0.4	Lucene_scoresP@5
-5	0.4	Lucene_scoresP@5
-6	0.2	Lucene_scoresP@5
-7	0.8	Lucene_scoresP@5
-8	0.2	Lucene_scoresP@5
-9	0.2	Lucene_scoresP@5
-10	0.6	Lucene_scoresP@5
-11	0.6	Lucene_scoresP@5
-12	0.4	Lucene_scoresP@5
-13	0.4	Lucene_scoresP@5
-14	0.4	Lucene_scoresP@5
-15	0.2	Lucene_scoresP@5
-16	0.2	Lucene_scoresP@5
-17	0.4	Lucene_scoresP@5
-18	0.0	Lucene_scoresP@5
-19	0.8	Lucene_scoresP@5
-20	0.6	Lucene_scoresP@5
-21	0.0	Lucene_scoresP@5
-22	0.0	Lucene_scoresP@5
-23	0.6	Lucene_scoresP@5
-24	0.2	Lucene_scoresP@5
-25	0.6	Lucene_scoresP@5
-26	0.4	Lucene_scoresP@5
-27	0.4	Lucene_scoresP@5
-28	0.8	Lucene_scoresP@5
-29	0.4	Lucene_scoresP@5
-30	0.2	Lucene_scoresP@5
-31	0.2	Lucene_scoresP@5
-32	0.2	Lucene_scoresP@5
-33	0.0	Lucene_scoresP@5
-36	0.2	Lucene_scoresP@5
-37	0.4	Lucene_scoresP@5
-38	0.2	Lucene_scoresP@5
-39	0.4	Lucene_scoresP@5
-40	0.4	Lucene_scoresP@5
-42	0.0	Lucene_scoresP@5
-43	0.2	Lucene_scoresP@5
-44	0.4	Lucene_scoresP@5
-45	0.6	Lucene_scoresP@5
-48	0.2	Lucene_scoresP@5
-49	0.2	Lucene_scoresP@5
-57	0.2	Lucene_scoresP@5
-58	0.6	Lucene_scoresP@5
-59	0.4	Lucene_scoresP@5
-60	0.4	Lucene_scoresP@5
-61	0.8	Lucene_scoresP@5
-62	0.0	Lucene_scoresP@5
-63	0.8	Lucene_scoresP@5
-64	0.2	Lucene_scoresP@5
+1	 Q0 	0.2	Lucene_scores_P@5
+2	 Q0 	0.6	Lucene_scores_P@5
+3	 Q0 	0.0	Lucene_scores_P@5
+4	 Q0 	0.4	Lucene_scores_P@5
+5	 Q0 	0.4	Lucene_scores_P@5
+6	 Q0 	0.2	Lucene_scores_P@5
+7	 Q0 	0.8	Lucene_scores_P@5
+8	 Q0 	0.2	Lucene_scores_P@5
+9	 Q0 	0.2	Lucene_scores_P@5
+10	 Q0 	0.6	Lucene_scores_P@5
+11	 Q0 	0.6	Lucene_scores_P@5
+12	 Q0 	0.4	Lucene_scores_P@5
+13	 Q0 	0.4	Lucene_scores_P@5
+14	 Q0 	0.4	Lucene_scores_P@5
+15	 Q0 	0.2	Lucene_scores_P@5
+16	 Q0 	0.2	Lucene_scores_P@5
+17	 Q0 	0.4	Lucene_scores_P@5
+18	 Q0 	0.0	Lucene_scores_P@5
+19	 Q0 	0.8	Lucene_scores_P@5
+20	 Q0 	0.6	Lucene_scores_P@5
+21	 Q0 	0.0	Lucene_scores_P@5
+22	 Q0 	0.0	Lucene_scores_P@5
+23	 Q0 	0.6	Lucene_scores_P@5
+24	 Q0 	0.2	Lucene_scores_P@5
+25	 Q0 	0.6	Lucene_scores_P@5
+26	 Q0 	0.4	Lucene_scores_P@5
+27	 Q0 	0.4	Lucene_scores_P@5
+28	 Q0 	0.8	Lucene_scores_P@5
+29	 Q0 	0.4	Lucene_scores_P@5
+30	 Q0 	0.2	Lucene_scores_P@5
+31	 Q0 	0.2	Lucene_scores_P@5
+32	 Q0 	0.2	Lucene_scores_P@5
+33	 Q0 	0.0	Lucene_scores_P@5
+36	 Q0 	0.2	Lucene_scores_P@5
+37	 Q0 	0.4	Lucene_scores_P@5
+38	 Q0 	0.2	Lucene_scores_P@5
+39	 Q0 	0.4	Lucene_scores_P@5
+40	 Q0 	0.4	Lucene_scores_P@5
+42	 Q0 	0.0	Lucene_scores_P@5
+43	 Q0 	0.2	Lucene_scores_P@5
+44	 Q0 	0.4	Lucene_scores_P@5
+45	 Q0 	0.6	Lucene_scores_P@5
+48	 Q0 	0.2	Lucene_scores_P@5
+49	 Q0 	0.2	Lucene_scores_P@5
+57	 Q0 	0.2	Lucene_scores_P@5
+58	 Q0 	0.6	Lucene_scores_P@5
+59	 Q0 	0.4	Lucene_scores_P@5
+60	 Q0 	0.4	Lucene_scores_P@5
+61	 Q0 	0.8	Lucene_scores_P@5
+62	 Q0 	0.0	Lucene_scores_P@5
+63	 Q0 	0.8	Lucene_scores_P@5
+64	 Q0 	0.2	Lucene_scores_P@5

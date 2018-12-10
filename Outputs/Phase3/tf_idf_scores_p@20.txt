@@ -1,52 +1,52 @@
-1	0.1	tf_idf_scoresP@20
-2	0.05	tf_idf_scoresP@20
-3	0.0	tf_idf_scoresP@20
-4	0.05	tf_idf_scoresP@20
-5	0.05	tf_idf_scoresP@20
-6	0.1	tf_idf_scoresP@20
-7	0.15	tf_idf_scoresP@20
-8	0.1	tf_idf_scoresP@20
-9	0.15	tf_idf_scoresP@20
-10	0.4	tf_idf_scoresP@20
-11	0.35	tf_idf_scoresP@20
-12	0.1	tf_idf_scoresP@20
-13	0.1	tf_idf_scoresP@20
-14	0.1	tf_idf_scoresP@20
-15	0.05	tf_idf_scoresP@20
-16	0.1	tf_idf_scoresP@20
-17	0.15	tf_idf_scoresP@20
-18	0.05	tf_idf_scoresP@20
-19	0.3	tf_idf_scoresP@20
-20	0.1	tf_idf_scoresP@20
-21	0.1	tf_idf_scoresP@20
-22	0.05	tf_idf_scoresP@20
-23	0.15	tf_idf_scoresP@20
-24	0.05	tf_idf_scoresP@20
-25	0.25	tf_idf_scoresP@20
-26	0.05	tf_idf_scoresP@20
-27	0.4	tf_idf_scoresP@20
-28	0.2	tf_idf_scoresP@20
-29	0.05	tf_idf_scoresP@20
-30	0.05	tf_idf_scoresP@20
-31	0.05	tf_idf_scoresP@20
-32	0.05	tf_idf_scoresP@20
-33	0.0	tf_idf_scoresP@20
-36	0.1	tf_idf_scoresP@20
-37	0.05	tf_idf_scoresP@20
-38	0.05	tf_idf_scoresP@20
-39	0.15	tf_idf_scoresP@20
-40	0.1	tf_idf_scoresP@20
-42	0.25	tf_idf_scoresP@20
-43	0.05	tf_idf_scoresP@20
-44	0.1	tf_idf_scoresP@20
-45	0.25	tf_idf_scoresP@20
-48	0.0	tf_idf_scoresP@20
-49	0.05	tf_idf_scoresP@20
-57	0.05	tf_idf_scoresP@20
-58	0.2	tf_idf_scoresP@20
-59	0.3	tf_idf_scoresP@20
-60	0.3	tf_idf_scoresP@20
-61	0.45	tf_idf_scoresP@20
-62	0.1	tf_idf_scoresP@20
-63	0.3	tf_idf_scoresP@20
-64	0.05	tf_idf_scoresP@20
+1	 Q0 	0.1	tf_idf_scores_P@20
+2	 Q0 	0.05	tf_idf_scores_P@20
+3	 Q0 	0.0	tf_idf_scores_P@20
+4	 Q0 	0.05	tf_idf_scores_P@20
+5	 Q0 	0.05	tf_idf_scores_P@20
+6	 Q0 	0.1	tf_idf_scores_P@20
+7	 Q0 	0.15	tf_idf_scores_P@20
+8	 Q0 	0.1	tf_idf_scores_P@20
+9	 Q0 	0.15	tf_idf_scores_P@20
+10	 Q0 	0.4	tf_idf_scores_P@20
+11	 Q0 	0.35	tf_idf_scores_P@20
+12	 Q0 	0.1	tf_idf_scores_P@20
+13	 Q0 	0.1	tf_idf_scores_P@20
+14	 Q0 	0.1	tf_idf_scores_P@20
+15	 Q0 	0.05	tf_idf_scores_P@20
+16	 Q0 	0.1	tf_idf_scores_P@20
+17	 Q0 	0.15	tf_idf_scores_P@20
+18	 Q0 	0.05	tf_idf_scores_P@20
+19	 Q0 	0.3	tf_idf_scores_P@20
+20	 Q0 	0.1	tf_idf_scores_P@20
+21	 Q0 	0.1	tf_idf_scores_P@20
+22	 Q0 	0.05	tf_idf_scores_P@20
+23	 Q0 	0.15	tf_idf_scores_P@20
+24	 Q0 	0.05	tf_idf_scores_P@20
+25	 Q0 	0.25	tf_idf_scores_P@20
+26	 Q0 	0.05	tf_idf_scores_P@20
+27	 Q0 	0.4	tf_idf_scores_P@20
+28	 Q0 	0.2	tf_idf_scores_P@20
+29	 Q0 	0.05	tf_idf_scores_P@20
+30	 Q0 	0.05	tf_idf_scores_P@20
+31	 Q0 	0.05	tf_idf_scores_P@20
+32	 Q0 	0.05	tf_idf_scores_P@20
+33	 Q0 	0.0	tf_idf_scores_P@20
+36	 Q0 	0.1	tf_idf_scores_P@20
+37	 Q0 	0.05	tf_idf_scores_P@20
+38	 Q0 	0.05	tf_idf_scores_P@20
+39	 Q0 	0.15	tf_idf_scores_P@20
+40	 Q0 	0.1	tf_idf_scores_P@20
+42	 Q0 	0.25	tf_idf_scores_P@20
+43	 Q0 	0.05	tf_idf_scores_P@20
+44	 Q0 	0.1	tf_idf_scores_P@20
+45	 Q0 	0.25	tf_idf_scores_P@20
+48	 Q0 	0.0	tf_idf_scores_P@20
+49	 Q0 	0.05	tf_idf_scores_P@20
+57	 Q0 	0.05	tf_idf_scores_P@20
+58	 Q0 	0.2	tf_idf_scores_P@20
+59	 Q0 	0.3	tf_idf_scores_P@20
+60	 Q0 	0.3	tf_idf_scores_P@20
+61	 Q0 	0.45	tf_idf_scores_P@20
+62	 Q0 	0.1	tf_idf_scores_P@20
+63	 Q0 	0.3	tf_idf_scores_P@20
+64	 Q0 	0.05	tf_idf_scores_P@20
