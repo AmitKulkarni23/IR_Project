@@ -27,5 +27,6 @@
   "unparsed_queries" : "\\Outputs\\Query_terms\\unparsed_query_dict.json",
   "extra_credit_output_best_match" : "\\Outputs\\Extra_Credits\\best_match_scores.txt",
   "extra_credit_output_exact_match" : "\\Outputs\\Extra_Credits\\exact_match_scores.txt",
+  "extra_credit_output_ordered_match" : "\\Outputs\\Extra_Credits\\extra_credit_output_ordered_match.txt",
   "positional_index" : "\\Outputs\\Extra_Credits\\positional_index.json"
 }

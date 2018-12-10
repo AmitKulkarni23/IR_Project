@@ -250,6 +250,12 @@ def write_top_100_scores_to_txt(score_dict, fname, method_name):
 
         # Converting a dictionary to a list
         # The cinverted list will only contain the keys
+
+        if not inner_dict:
+            fd.write("No results found for query " + str(q))
+            fd.write("\n")
+            fd.write("--------------\n")
+            continue
         for idx, item in enumerate(inner_dict[:100]):
             to_write = str(q) + " " + "Q0" + " " + item[0] + " " + str(idx + 1) + " " + str(item[1]) + " " + method_name + "\n"
             fd.write(to_write)

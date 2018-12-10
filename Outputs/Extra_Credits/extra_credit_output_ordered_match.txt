@@ -1,0 +1,133 @@
+No results found for query 1
+--------------
+No results found for query 2
+--------------
+No results found for query 3
+--------------
+No results found for query 4
+--------------
+No results found for query 5
+--------------
+No results found for query 6
+--------------
+No results found for query 7
+--------------
+No results found for query 8
+--------------
+No results found for query 9
+--------------
+No results found for query 10
+--------------
+No results found for query 11
+--------------
+No results found for query 12
+--------------
+No results found for query 13
+--------------
+No results found for query 14
+--------------
+No results found for query 15
+--------------
+No results found for query 16
+--------------
+No results found for query 17
+--------------
+No results found for query 18
+--------------
+19 Q0 CACM-2973 1 6 ordered_proxmimity_match_20
+19 Q0 CACM-3075 2 5 ordered_proxmimity_match_20
+19 Q0 CACM-1468 3 4 ordered_proxmimity_match_20
+19 Q0 CACM-2838 4 4 ordered_proxmimity_match_20
+19 Q0 CACM-2433 5 3 ordered_proxmimity_match_20
+19 Q0 CACM-2557 6 3 ordered_proxmimity_match_20
+-----------------------
+No results found for query 20
+--------------
+No results found for query 21
+--------------
+No results found for query 22
+--------------
+No results found for query 23
+--------------
+No results found for query 24
+--------------
+No results found for query 25
+--------------
+No results found for query 26
+--------------
+No results found for query 27
+--------------
+No results found for query 28
+--------------
+No results found for query 29
+--------------
+No results found for query 30
+--------------
+No results found for query 31
+--------------
+No results found for query 32
+--------------
+No results found for query 33
+--------------
+No results found for query 34
+--------------
+No results found for query 35
+--------------
+No results found for query 36
+--------------
+No results found for query 37
+--------------
+No results found for query 38
+--------------
+No results found for query 39
+--------------
+No results found for query 40
+--------------
+No results found for query 41
+--------------
+No results found for query 42
+--------------
+No results found for query 43
+--------------
+No results found for query 44
+--------------
+No results found for query 45
+--------------
+No results found for query 46
+--------------
+No results found for query 47
+--------------
+No results found for query 48
+--------------
+No results found for query 49
+--------------
+No results found for query 50
+--------------
+No results found for query 51
+--------------
+No results found for query 52
+--------------
+No results found for query 53
+--------------
+No results found for query 54
+--------------
+No results found for query 55
+--------------
+No results found for query 56
+--------------
+No results found for query 57
+--------------
+No results found for query 58
+--------------
+No results found for query 59
+--------------
+No results found for query 60
+--------------
+No results found for query 61
+--------------
+No results found for query 62
+--------------
+No results found for query 63
+--------------
+No results found for query 64
+--------------
